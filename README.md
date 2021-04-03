@@ -17,24 +17,29 @@ python --version
 pip --version
 ```
 
-## PipEnv
+## Isolated Python Environments
 
-PipEnv will provide you a python isolated environment
+- [PipEnv](https://pipenv.pypa.io/en/latest/)
+- [Conda](https://docs.conda.io/projects/conda/en/latest/index.html)
 
-### Install PipEnv
+### PipEnv
 
-```
-pip install pipenv
-```
-
-### Install Python Packages
 
 ```
-pipenv install
-```
+pipenv install pandas tabulate openpyxl lxml html5lib beautifulsoup4 sqlalchemy feather-format matplotlib xlrd scipy ipykernel jupyterlab pexpect ipython-sql
 
-### JupyterLab
-
-``` 
 pipenv run jupyter lab
+```
+
+### Conda
+
+```
+conda create -n environment-pandas
+conda activate environment-pandas
+
+conda install pandas tabulate openpyxl lxml html5lib beautifulsoup4 sqlalchemy feather-format matplotlib xlrd scipy ipykernel jupyterlab pexpect
+
+pip install ipython-sql
+
+jupyter lab
 ```
