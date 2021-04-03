@@ -1,5 +1,6 @@
 # Pandas Environment
 
+This repository offers you a basic setup for a local environment with Pandas and JupyterLab
 
 ## Python Distibution
 
@@ -10,6 +11,11 @@ I recomment one of the following options:
 - [Miniconda](https://docs.conda.io/en/latest/miniconda.html)
 - [Miniforge](https://github.com/conda-forge/miniforge)
 
+
+```
+python --version
+pip --version
+```
 
 ## PipEnv
 
