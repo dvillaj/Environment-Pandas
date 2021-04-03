@@ -1,35 +1,34 @@
-# Practicas-Pandas
-
-# Windows
-
-Create a link to lauch Jupyter Lab:
-
-```
-Target: C:\Windows\System32\cmd.exe /c "pipenv run jupyter lab --notebook-dir=notebooks"
-Start in: C:\Develop\Projects\Practicas-Pandas
-```
-
-# PipEnv
-
-NOTE: `bash` is required
-
-## Install Environment
+# Pandas Environment
 
 
-```
-pipenv install --dev
-```
+## Python Distibution
 
-## Lauch Jupyter Lab
+You will need Python installed in your local machine.
+
+I recomment one of the following options:
+
+- [Miniconda](https://docs.conda.io/en/latest/miniconda.html)
+- [Miniforge](https://github.com/conda-forge/miniforge)
+
+
+## PipEnv
+
+PipEnv will provide you a python isolated environment
+
+### Install PipEnv
 
 ```
-pipenv run jupyter lab --notebook-dir=notebooks
+pip install pipenv
 ```
 
-## Remove Virtual Environment
+### Install Python Packages
 
 ```
-pipenv --rm
+pipenv install
 ```
 
+### JupyterLab
 
+``` 
+pipenv run jupyter lab
+```
