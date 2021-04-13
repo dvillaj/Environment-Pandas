@@ -26,7 +26,7 @@ pip --version
 
 
 ```
-pipenv install pandas tabulate openpyxl lxml html5lib beautifulsoup4 sqlalchemy feather-format matplotlib xlrd scipy ipykernel jupyterlab pexpect ipython-sql
+pipenv install pandas tabulate openpyxl lxml html5lib beautifulsoup4 sqlalchemy feather-format matplotlib xlrd scipy ipykernel jupyterlab pexpect ipython-sql Faker
 ```
 
 ### Jupyter lab
@@ -47,7 +47,7 @@ pipenv --rm
 conda create -n environment-pandas
 conda activate environment-pandas
 
-conda install pandas tabulate openpyxl lxml html5lib beautifulsoup4 sqlalchemy feather-format matplotlib xlrd scipy ipykernel jupyterlab pexpect
+conda install pandas tabulate openpyxl lxml html5lib beautifulsoup4 sqlalchemy feather-format matplotlib xlrd scipy ipykernel jupyterlab pexpect Faker
 
 pip install ipython-sql
 ```
@@ -62,5 +62,5 @@ jupyter lab
 ### Remove Conda Environment
 
 ````
-conda env remove -n environmrnt-pandas
+conda env remove -n environment-pandas
 ````
