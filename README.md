@@ -11,6 +11,7 @@ There are several flavors for a local python environment with JupyterLab in your
 - [PipEnv](https://pipenv.pypa.io/en/latest/)
 - [Conda](https://docs.conda.io/projects/conda/en/latest/index.html)
 - [Docker](https://www.docker.com/)
+- [DigitalOcean]()
 
 ## PipEnv
 
@@ -84,7 +85,7 @@ conda env remove -n environment-pandas
 
 ## Docker
 
-The last flavor to run a local jupyterlab in your machine is to use Docker.
+With this option you don't need to have python installed in your local machine. JupyterLab is run thanks to Docker.
 
 I have already created a [Docker image](https://github.com/dvillaj/Docker-JupyterLab-Pandas) for you so you only need to have Docker installed in your machine.
 
@@ -97,3 +98,24 @@ docker-compose up
 ```
 
 Press Control-C to exit 
+
+## DigitalOcean
+
+This last option consist to have a JupyterLab enviroment in the cloud with DigitalOcean (This is not free!)
+
+Create a new droplet with the following characteristics:
+
+- Docker on Ubuntu 20.04 Image from MarketPlace
+- Regular Intel with 1 GB / 1 CPU (The cheapest one)
+- London or Frankfurt Location (The nearest one)
+- Personal SSH Key (Create one if it is necessary)
+
+This droplet will cost you about 5$ / month
+
+Access the droplet and execute the following sentence ...
+
+```
+curl https://gist.githubusercontent.com/dvillaj/74dcdd1acf21f0d4dfb7dd4acc0eb3f6/raw/68ef024807ea533e1c8fa1e4123f1a1a01cce68f/deploy-jupyterlab.sh | bash
+```
+
+You may want to use a personal dns thanks to [DuckDNS](https://www.duckdns.org/)
