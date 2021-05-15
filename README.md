@@ -86,7 +86,7 @@ conda env remove -n environment-pandas
 
 The last flavor to run a local jupyterlab in your machine is to use Docker.
 
-I have already created a [Docker image](https://github.com/dvillaj/JupyterLab-Pandas) for you so you only need to have Docker installed in your machine.
+I have already created a [Docker image](https://github.com/dvillaj/Docker-JupyterLab-Pandas) for you so you only need to have Docker installed in your machine.
 
 ### Jupyter Lab with Docker
 
