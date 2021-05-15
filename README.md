@@ -11,7 +11,10 @@ There are several flavors for a local python environment with JupyterLab in your
 - [PipEnv](https://pipenv.pypa.io/en/latest/)
 - [Conda](https://docs.conda.io/projects/conda/en/latest/index.html)
 - [Docker](https://www.docker.com/)
-- [DigitalOcean]()
+
+There is another option to have JupyerLab deployed on the cloud:
+
+- [DigitalOcean](https://www.digitalocean.com/)
 
 ## PipEnv
 
@@ -27,7 +30,7 @@ Create a new isolated virtual environment and install all the packages from `req
 pipenv install -r requeriments.txt
 ```
 
-### Jupyter lab wit pipenv
+### JupyterLab with pipenv
 
 Run Jupyter lab
 
@@ -65,7 +68,7 @@ conda activate environment-pandas
 conda install --yes --file requeriments.txt
 ```
 
-### Jupyter Lab with Conda
+### JupyterLab with Conda
 
 To run JupyterLab ...
 
@@ -89,7 +92,7 @@ With this option you don't need to have python installed in your local machine. 
 
 I have already created a [Docker image](https://github.com/dvillaj/Docker-JupyterLab-Pandas) for you so you only need to have Docker installed in your machine.
 
-### Jupyter Lab with Docker
+### JupyterLab with Docker
 
 Execute the following command and access to [Jupyerlab](http://loPcalhost:8888/lab)
 
@@ -101,7 +104,7 @@ Press Control-C to exit
 
 ## DigitalOcean
 
-This last option consist to have a JupyterLab enviroment in the cloud with DigitalOcean (This is not free!)
+This last option consist to have a JupyterLab enviroment on the cloud with DigitalOcean (This is not free!)
 
 Create a new droplet with the following characteristics:
 
