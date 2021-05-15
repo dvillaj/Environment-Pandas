@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  jupyterlab:
+    image: dvillaj/jupyterlab-pandas:latest
+    ports: 
+      - 8888:8888
+    environment:
+      - JUPYTERLAB_TOKEN=
+
+    volumes:
+      - ./notebooks:/home/notebooks 

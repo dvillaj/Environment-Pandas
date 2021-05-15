@@ -1,0 +1,17 @@
+pandas
+tabulate
+openpyxl
+lxml
+html5lib
+beautifulsoup4
+sqlalchemy
+feather-format
+matplotlib
+xlrd
+scipy
+ipykernel
+jupyterlab
+pexpect
+ipython-sql
+Faker
+jupyterlab-git
