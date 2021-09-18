@@ -38,6 +38,12 @@ Run Jupyter lab
 pipenv run jupyter lab --notebook-dir ./notebooks
 ```
 
+### Update packages
+
+```
+pipenv update
+```
+
 ### Remove PipEnv Enrironment
 
 If you don't neeed the pipenv environment anymore (may be you need free space in your machine) run ...
