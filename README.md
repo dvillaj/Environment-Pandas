@@ -38,6 +38,16 @@ Run Jupyter lab
 pipenv run jupyter lab --notebook-dir ./notebooks
 ```
 
+### Shotcut in Windows Exporer (Windows Only)
+
+Create a link to launch Jupyter Lab from Windows Explorer:
+
+Click with the left mouse button and set the following properties:
+```
+Target: C:\Windows\System32\cmd.exe /c "pipenv run jupyter lab --notebook-dir=notebooks"
+Start in: [Project's Folder]
+```
+
 ### Update packages
 
 ```
@@ -63,7 +73,7 @@ Conda is similar to PipEnv and will let you create a new isolated virtual enviro
 To create a new environment use ...
 
 ```
-conda create --yes -n environment-pandas
+conda create --yes -n environment-pandas python
 
 ```
 
@@ -81,6 +91,22 @@ To run JupyterLab ...
 ```
 conda activate environment-pandas
 jupyter lab --notebook-dir ./notebooks
+```
+
+### Shotcut in Windows Exporer (Windows Only)
+
+Create a link to launch Jupyter Lab from Windows Explorer:
+
+Click with the left mouse button and set the following properties:
+```
+Target: C:\Windows\System32\cmd.exe /c "conda activate environment-pandas && jupyter lab --notebook-dir ./notebooks"
+Start in: [Project's Folder]
+```
+
+### Update all packages
+
+```
+conda update --all
 ```
 
 ### Remove Conda Environment
