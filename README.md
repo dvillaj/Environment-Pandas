@@ -136,7 +136,7 @@ Press Control-C to exit
 
 ## DigitalOcean
 
-This last option consist to have a JupyterLab enviroment on the cloud with DigitalOcean (This is not free!)
+This last option is to have a JupyterLab enviroment on the cloud with DigitalOcean (This is not free!)
 
 Create a new droplet with the following characteristics:
 
