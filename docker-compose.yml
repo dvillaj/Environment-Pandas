@@ -2,7 +2,8 @@ version: "3"
 
 services:
   jupyterlab:
-    image: dvillaj/jupyterlab-pandas:latest
+    #image: dvillaj/jupyterlab-pandas:latest
+    build: .
     ports: 
       - 8888:8888
     environment:
