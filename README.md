@@ -126,7 +126,7 @@ With this option you don't need to have python installed in your local machine. 
 
 I have already created a [Docker image](https://github.com/dvillaj/Docker-JupyterLab-Pandas) for you so you only need to have Docker installed in your machine.
 
-### Deploy to DockerHub
+### Deploy Docker Image to DockerHub
 
 This repo contains a GitHub action to publish automatically this image to DockerHub.
 
@@ -141,9 +141,9 @@ To configure this action do:
 This action will be executed when a new tag named `v*` is pushed to the repository
 
 
-### JupyterLab with Docker
+### JupyterLab with Docker 
 
-Execute the following command and access to [Jupyerlab](http://loPcalhost:8888/lab)
+If you have docker installed in your machine you can run a docker image with the following command and access to [Jupyerlab](http://localhost:8888/lab)
 
 ```
 docker-compose up
@@ -151,9 +151,9 @@ docker-compose up
 
 Press Control-C to exit 
 
-## DigitalOcean
+## Run docker image at DigitalOcean
 
-This last option is to have a JupyterLab enviroment on the cloud with DigitalOcean (This is not free!)
+This last option is to have a JupyterLab enviroment on the cloud with [DigitalOcean](https://www.digitalocean.com/) (This is not free!)
 
 Create a new droplet with the following characteristics:
 
@@ -164,10 +164,26 @@ Create a new droplet with the following characteristics:
 
 This droplet will cost you about 5$ / month
 
-Access the droplet and execute the following sentence ...
+Access the droplet and execute the following sentences ...
 
 ```
-curl https://gist.githubusercontent.com/dvillaj/74dcdd1acf21f0d4dfb7dd4acc0eb3f6/raw/68ef024807ea533e1c8fa1e4123f1a1a01cce68f/deploy-jupyterlab.sh | bash
+echo export TERM=vt100 > ~/.bashrc 
+source ~/.bashrc 
+
+mkdir -p /opt/jupyterlab/notebooks
+
+export TOKEN=`openssl rand -base64 14`
+export PUBLIC_IP=`dig +short myip.opendns.com @resolver1.opendns.com`
+
+/usr/bin/docker run -d -p 80:8888 \
+        -v /opt/jupyterlab/notebooks:/home/notebooks \
+        -e JUPYTERLAB_TOKEN=$TOKEN \
+        --name jupyterlab \
+        --restart always \
+        dvillaj/jupyterlab-pandas:latest
+
+echo JupyerLab is up and ready. Save a shortcut with the following link ...
+echo http://${PUBLIC_IP}/lab?token=${TOKEN}
 ```
 
 You may want to use a personal dns thanks to [DuckDNS](https://www.duckdns.org/)
