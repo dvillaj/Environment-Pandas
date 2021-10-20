@@ -1,3 +1,5 @@
+[![Deploy to DockerHub](https://github.com/dvillaj/Environment-Pandas/actions/workflows/deploy-dockerhub.yml/badge.svg)](https://github.com/dvillaj/Environment-Pandas/actions/workflows/deploy-dockerhub.yml)
+
 # Pandas Environment
 
 This repository offers you a basic setup for a local environment with Pandas and JupyterLab + Git Plugin
