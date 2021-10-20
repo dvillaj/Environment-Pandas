@@ -1,0 +1,28 @@
+name: Deploy to DockerHub
+
+on:
+  push:
+    tags:
+      - v*
+env:
+  DOCKERHUB_USER: dvillaj
+  IMAGE_NAME: jupyterlab-pandas
+
+jobs: 
+  build:
+   
+    runs-on: ubuntu-latest
+   
+    steps:
+      - name: Checkout files    
+        uses: actions/checkout@v2
+
+      - name: Push to Docker Hub
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ env.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: ${{ env.DOCKERHUB_USER }}/${{ env.IMAGE_NAME }}
+          tag_with_ref: true
+          tags: latest
+

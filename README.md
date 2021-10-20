@@ -124,6 +124,21 @@ With this option you don't need to have python installed in your local machine. 
 
 I have already created a [Docker image](https://github.com/dvillaj/Docker-JupyterLab-Pandas) for you so you only need to have Docker installed in your machine.
 
+### Deploy to DockerHub
+
+This repo contains a GitHub action to publish automatically this image to DockerHub.
+
+To configure this action do:
+
+- Create a new account on [DockerHub](https://hub.docker.com)
+- On DockerHub, create a new Access Token (Settings / Security) and copy it
+- Edit `.github\workflows\deploy-dockerhub.yml` file to set `DOCKERHUB_USER` and `IMAGE_NAME` variables, with the name account on DockerHub and the image name that will be pubished on DockerHub
+- Add a new repository secret named `DOCKERHUB_TOKEN` with the token creaat on DockerHub
+
+
+This action will be executed when a new tag named `v*` is pushed to the repository
+
+
 ### JupyterLab with Docker
 
 Execute the following command and access to [Jupyerlab](http://loPcalhost:8888/lab)
