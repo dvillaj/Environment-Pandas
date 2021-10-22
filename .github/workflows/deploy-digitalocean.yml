@@ -23,5 +23,7 @@ jobs:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
       - name: Create a Docker Droplet
-        run: doctl compute droplet create jupyterlab-droplet --image docker-20-04 --region nyc3 --size s-1vcpu-1gb
+        run: |
+          doctl compute ssh-key create github --public-key "${{ secrets.DIGITALOCEAN_SSH_KEY_PUBLIC }}"
+          # doctl compute droplet create jupyterlab-droplet --image docker-20-04 --region asm3 --size s-1vcpu-1gb --wait
 
