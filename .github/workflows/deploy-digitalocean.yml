@@ -32,7 +32,7 @@ jobs:
           ssh-keygen -N "" -f digitalocean
           export SSH_KEY_PUBLIC=$(cat digitalocean.pub)
           export DO_SSH_KEY=$(doctl compute ssh-key create github --verbose --public-key "$SSH_KEY_PUBLIC" --no-header --format ID)
-          echo "::set-env name=DO_SSH_KEY::$DO_SSH_KEY"
+          #echo "::set-env name=DO_SSH_KEY::$DO_SSH_KEY"
 
       - name: Destroy Droplet
         run: |
