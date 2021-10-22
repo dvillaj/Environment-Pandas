@@ -24,7 +24,10 @@ jobs:
 
       - name: Create SSH key
         run: |
-          doctl compute ssh-key create github --verbose --public-key "${{ secrets.DIGITALOCEAN_SSH_KEY_PUBLIC }}"  || true
+          ssh-keygen -N "" -f digitalocean
+          export PUBLIC_KEY=$(cat digitalocean.pub)
+          echo $PUBLIC_KEY
+          doctl compute ssh-key create github --verbose --public-key "$PUBLIC_KEY"  || true
 
       - name: Destroy Droplet
         run: |
