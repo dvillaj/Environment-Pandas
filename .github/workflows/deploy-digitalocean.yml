@@ -22,9 +22,16 @@ jobs:
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
-      - name: Create a Docker Droplet
+      - name: Create SSH key
         run: |
           doctl compute ssh-key create github --verbose --public-key "${{ secrets.DIGITALOCEAN_SSH_KEY_PUBLIC }}"  || true
+
+      - name: Destroy Droplet
+        run: |
+          doctl compute droplet delete jupyterlab-droplet --force
+
+      - name: Create a Docker Droplet
+        run: |
           doctl compute droplet create jupyterlab-droplet --image docker-20-04 --region asm3 --size s-1vcpu-1gb --ssh-keys github --wait
-          doctl compute droplet get jupyterlab-droplet --template "droplet IP: {{ .PublicIPv4}}
+          doctl compute droplet get jupyterlab-droplet --template "droplet IP: {{ .PublicIPv4}}                 
 
