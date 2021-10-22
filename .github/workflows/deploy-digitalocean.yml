@@ -10,6 +10,11 @@ on:
 env:
   DOCKERHUB_USER: dvillaj
   IMAGE_NAME: jupyterlab-pandas
+  SSH_KEY_NAME: github
+  DROPLET_NAME: jupyterlab-droplet
+  DROPLET_SIZE: s-1vcpu-1gb
+  DROPLET_REGION: LON1
+  DROPLET_IMAGE: docker-20-04 
 
 jobs:
   build:
@@ -26,15 +31,16 @@ jobs:
         run: |
           ssh-keygen -N "" -f digitalocean
           export PUBLIC_KEY=$(cat digitalocean.pub)
-          echo $PUBLIC_KEY
-          doctl compute ssh-key create github --verbose --public-key "$PUBLIC_KEY"  || true
+          doctl compute ssh-key create ${{ env.SSH_KEY_NAME }} --verbose --public-key "$PUBLIC_KEY"  || true
 
       - name: Destroy Droplet
         run: |
-          doctl compute droplet delete jupyterlab-droplet --force || true
+          doctl compute droplet delete ${{ env.DROPLET_NAME }} --force || true
 
       - name: Create a Docker Droplet
         run: |
-          doctl compute droplet create jupyterlab-droplet --image docker-20-04 --region LON1 --size s-1vcpu-1gb --ssh-keys github --wait
-          doctl compute droplet get jupyterlab-droplet --template "droplet IP: {{ .PublicIPv4}}                 
+          DO_SSH_IDS=$(doctl compute ssh-key list --no-header --format ID)
+          echo $DO_SSH_IDS
+          doctl compute droplet create ${{ env.DROPLET_NAME }} --image ${{ env.DROPLET_IMAGE}} --region ${{ env.DROPLET_REGION }} --size ${{ env.DROPLET_SIZE }} --ssh-keys $DO_SSH_IDS --wait
+          doctl compute droplet get ${{ env.DROPLET_NAME }} --template "droplet IP: {{ .PublicIPv4}}                 
 
