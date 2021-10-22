@@ -32,6 +32,6 @@ jobs:
 
       - name: Create a Docker Droplet
         run: |
-          doctl compute droplet create jupyterlab-droplet --image docker-20-04 --region asm3 --size s-1vcpu-1gb --ssh-keys github --wait
+          doctl compute droplet create jupyterlab-droplet --image docker-20-04 --region LON1 --size s-1vcpu-1gb --ssh-keys github --wait
           doctl compute droplet get jupyterlab-droplet --template "droplet IP: {{ .PublicIPv4}}                 
 
