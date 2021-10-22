@@ -30,8 +30,9 @@ jobs:
       - name: Create SSH key
         run: |
           ssh-keygen -N "" -f digitalocean
-          export PUBLIC_KEY=$(cat digitalocean.pub)
-          doctl compute ssh-key create ${{ env.SSH_KEY_NAME }} --verbose --public-key "$PUBLIC_KEY"  || true
+          export SSH_KEY_PUBLIC=$(cat digitalocean.pub)
+          export DO_SSH_KEY=$(doctl compute ssh-key create github --verbose --public-key "$SSH_KEY_PUBLIC" --no-header --format ID)
+          echo "::set-env name=DO_SSH_KEY::$DO_SSH_KEY"
 
       - name: Destroy Droplet
         run: |
@@ -39,8 +40,12 @@ jobs:
 
       - name: Create a Docker Droplet
         run: |
-          DO_SSH_IDS=$(doctl compute ssh-key list --no-header --format ID)
-          echo $DO_SSH_IDS
-          doctl compute droplet create ${{ env.DROPLET_NAME }} --image ${{ env.DROPLET_IMAGE}} --region ${{ env.DROPLET_REGION }} --size ${{ env.DROPLET_SIZE }} --ssh-keys $DO_SSH_IDS --wait
-          doctl compute droplet get ${{ env.DROPLET_NAME }} --template "droplet IP: {{ .PublicIPv4}}                 
+          # DO_SSH_IDS=$(doctl compute ssh-key list --no-header --format ID)
+          # echo $DO_SSH_IDS
+          # doctl compute droplet create ${{ env.DROPLET_NAME }} --image ${{ env.DROPLET_IMAGE}} --region ${{ env.DROPLET_REGION }} --size ${{ env.DROPLET_SIZE }} --ssh-keys $DO_SSH_IDS --wait
+          # doctl compute droplet get ${{ env.DROPLET_NAME }} --template "droplet IP: {{ .PublicIPv4}}                 
+          echo "Step Create a Docker Droplet"
+          echo $DO_SSH_KEY
 
+          export SSH_KEY=$(cat digitalocean)
+          echo $SSH_KEY
