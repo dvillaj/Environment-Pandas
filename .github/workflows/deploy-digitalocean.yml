@@ -25,6 +25,6 @@ jobs:
       - name: Create a Docker Droplet
         run: |
           doctl compute ssh-key create github --verbose --public-key "${{ secrets.DIGITALOCEAN_SSH_KEY_PUBLIC }}"  || true
-          doctl compute ssh-key list
-          # doctl compute droplet create jupyterlab-droplet --image docker-20-04 --region asm3 --size s-1vcpu-1gb --wait
+          doctl compute droplet create jupyterlab-droplet --image docker-20-04 --region asm3 --size s-1vcpu-1gb --ssh-keys github --wait
+          doctl compute droplet get jupyterlab-droplet --template "droplet IP: {{ .PublicIPv4}}
 
