@@ -3,22 +3,25 @@ name: Deploy to DigitalOcean
 on: 
   workflow_dispatch:
     inputs:
-      logLevel:
-        description: 'Log level'     
+      token:
+        description: 'JypyterLab TOKEN'     
         required: true
-        default: 'warning'
-      tags:
-        description: 'Test scenario tags'  
 
 env:
   DOCKERHUB_USER: dvillaj
   IMAGE_NAME: jupyterlab-pandas
 
 jobs:
-  printInputs:
+  build:
+
     runs-on: ubuntu-latest
+    
     steps:
-    - run: |
-        echo "Log level: ${{ github.event.inputs.logLevel }}"
-        echo "Tags: ${{ github.event.inputs.tags }}" 
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: Create a Docker Droplet
+        run: doctl compute droplet create test --image ubuntu-18-04-x64 --region nyc3 --size s-1vcpu-1gb
 
