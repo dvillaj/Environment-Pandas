@@ -28,7 +28,7 @@ jobs:
 
       - name: Destroy Droplet
         run: |
-          doctl compute droplet delete jupyterlab-droplet --force
+          doctl compute droplet delete jupyterlab-droplet --force || true
 
       - name: Create a Docker Droplet
         run: |
