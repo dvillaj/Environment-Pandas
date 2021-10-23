@@ -16,7 +16,7 @@ env:
   DROPLET_REGION: LON1
   DROPLET_IMAGE: docker-20-04 
 
-  ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+  #ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
 jobs:
   build:
@@ -30,34 +30,45 @@ jobs:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
       - name: Create SSH key and publish to DigitalOcean
+        id: create_ssh_id
         run: |
           ssh-keygen -N "" -f ~/digitalocean 
 
-          export SSH_KEY_PUBLIC=$(cat ~/digitalocean.pub)
-          export SSH_KEY=$(cat ~/digitalocean)
-          export DO_SSH_KEY_ID=$(doctl compute ssh-key create github --verbose --public-key "$SSH_KEY_PUBLIC" --no-header --format ID)
-
-          echo "::set-env name=DO_SSH_KEY_ID::$DO_SSH_KEY_ID"
-          echo "::set-env name=SSH_KEY::$SSH_KEY"
+          SSH_KEY_PUBLIC=$(cat ~/digitalocean.pub)
+          SSH_KEY=$(cat ~/digitalocean)
+          DO_SSH_KEY_ID=$(doctl compute ssh-key create github --verbose --public-key "$SSH_KEY_PUBLIC" --no-header --format ID)
+          
+          echo ::set-output name=ssh_key::$SSH_KEY
+          echo ::set-output name=key_id::$DO_SSH_KEY_ID
 
       - name: Destroy JupyterLab Droplet
         run: |
           doctl compute droplet delete ${{ env.DROPLET_NAME }} --force || true
 
       - name: Create JupyterLab Droplet
+        id: create_droplet
         run: |
-          export DO_PUBLIC_ID=$(doctl compute droplet create ${{ env.DROPLET_NAME }} --image ${{ env.DROPLET_IMAGE}} --region ${{ env.DROPLET_REGION }} --size ${{ env.DROPLET_SIZE }} --ssh-keys $DO_SSH_KEY_ID --wait --no-header --format PublicIPv4)
+          DO_PUBLIC_ID=$(doctl compute droplet create ${{ env.DROPLET_NAME }} \
+                --image ${{ env.DROPLET_IMAGE}} \
+                --region ${{ env.DROPLET_REGION }} \
+                --size ${{ env.DROPLET_SIZE }} \
+                --ssh-keys ${{ steps.create_ssh_id.outputs.key_id }} \
+                --wait \
+                --no-header \
+                --format PublicIPv4)
+
+          echo ::set-output name=public_id::$DO_PUBLIC_ID
 
       - name: Destroy SSH Key
         run: |
-          doctl compute ssh-key delete $DO_SSH_KEY_ID --force          
+          doctl compute ssh-key delete ${{ steps.create_ssh_id.outputs.key_id }} --force          
 
       - name: Deploy Docker to JupyterLab Droplet
         uses: appleboy/ssh-action@v0.1.2
         with:
-          host: $DO_PUBLIC_ID # IP address of the server you wish to ssh into
-          key: $SSH_KEY # Private or public key of the server
-          username: root # User of the server you want to ssh into
+          host: ${{ steps.create_droplet.outputs.ssh_key }}
+          key: ${{ steps.create_ssh_id.outputs.public_id }}
+          username: root
      
           script: |
             mkdir test 
