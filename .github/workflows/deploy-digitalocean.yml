@@ -31,7 +31,7 @@ jobs:
 
       - name: Create SSH key and publish to DigitalOcean
         run: |
-          ssh-keygen -N "" -f digitalocean 
+          ssh-keygen -N "" -f ~/digitalocean 
 
           export SSH_KEY_PUBLIC=$(cat ~/digitalocean.pub)
           export SSH_KEY=$(cat ~/digitalocean)
