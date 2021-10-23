@@ -8,7 +8,7 @@ jobs:
     steps:
       - name: check 22 port
         run: |
-          nc -zvw10 ${{ steps.create_droplet.outputs.public_ip }} 22 
+          nc -zvw10 104.248.169.162 22 
 
       - name: Deploy app
         uses: appleboy/ssh-action@v0.1.2
