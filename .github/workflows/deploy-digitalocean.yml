@@ -10,7 +10,7 @@ on:
 env:
   DOCKERHUB_USER: dvillaj
   IMAGE_NAME: jupyterlab-pandas
-  SSH_KEY_NAME: github
+
   DROPLET_NAME: jupyterlab-droplet
   DROPLET_SIZE: s-1vcpu-1gb
   DROPLET_REGION: LON1
@@ -32,14 +32,11 @@ jobs:
         run: |
           ssh-keygen -N "" -f ~/digitalocean 
 
-
           SSH_KEY_PUBLIC=$(cat ~/digitalocean.pub)
           DO_SSH_KEY_ID=$(doctl compute ssh-key create github --verbose --public-key "$SSH_KEY_PUBLIC" --no-header --format ID)
 
           SSH_KEY=$(cat ~/digitalocean)
-          #SSH_KEY="${SSH_KEY//'%'/'%25'}"
           SSH_KEY="${SSH_KEY//$'\n'/'%0A'}"
-          #SSH_KEY="${SSH_KEY//$'\r'/'%0D'}"
 
           echo ::set-output name=key_id::$DO_SSH_KEY_ID
           echo ::set-output name=ssh_key_private::$SSH_KEY
@@ -64,22 +61,14 @@ jobs:
 
       - name: Destroy SSH Key
         run: |
-          doctl compute ssh-key delete ${{ steps.create_ssh_id.outputs.key_id }} --force          
+          doctl compute ssh-key delete ${{ steps.create_ssh_id.outputs.key_id }} --force         
 
+        # We have to give some time to the droplet for starting the SSH service
       - name: Sleeping ...
         run: |
           sleep 15
 
-      - name: check 22 port
-        run: nc -zvw10 ${{ steps.create_droplet.outputs.public_ip }} 22 
-
-      - name: Deploy Docker to JupyterLab Droplet
-        run: |
-          ssh -i ~/digitalocean -o "StrictHostKeyChecking no" root@${{ steps.create_droplet.outputs.public_ip }} bash <<EOF
-          whoami
-          EOF
-
-      - name: Deploy app
+      - name: Deploy Docker
         uses: appleboy/ssh-action@v0.1.2
         with:
           host: ${{ steps.create_droplet.outputs.public_ip }}
@@ -87,5 +76,17 @@ jobs:
           username: root
      
           script: |
-            ls
-            echo 'Deployment successful to digital ocean' 
+            mkdir -p /opt/jupyterlab/notebooks
+
+            /usr/bin/docker run -d -p 80:8888 \
+                    -v /opt/jupyterlab/notebooks:/home/notebooks \
+                    -e JUPYTERLAB_TOKEN=${{ github.event.inputs.token }}" \
+                    --name jupyterlab \
+                    --restart always \
+                    ${{ env.DOCKERHUB_USER }}/${{ env.IMAGE_NAME }}:latest
+
+
+      - name: Jupyterlab URL
+        run: |
+          echo JupyerLab is up and ready. Save a shortcut with the following link ...
+          echo http://${{ steps.create_droplet.outputs.public_ip }}/lab?token=${{ github.event.inputs.logLevel }}"
