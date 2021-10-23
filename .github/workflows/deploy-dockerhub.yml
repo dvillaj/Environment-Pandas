@@ -25,4 +25,3 @@ jobs:
           repository: ${{ env.DOCKERHUB_USER }}/${{ env.IMAGE_NAME }}
           tag_with_ref: true
           tags: latest
-
