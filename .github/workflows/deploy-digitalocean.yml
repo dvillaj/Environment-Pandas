@@ -16,8 +16,6 @@ env:
   DROPLET_REGION: LON1
   DROPLET_IMAGE: docker-20-04 
 
-  #ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-
 jobs:
   build:
 
@@ -45,32 +43,36 @@ jobs:
         run: |
           doctl compute droplet delete ${{ env.DROPLET_NAME }} --force || true
 
-      - name: Create JupyterLab Droplet
-        id: create_droplet
-        run: |
-          DO_PUBLIC_ID=$(doctl compute droplet create ${{ env.DROPLET_NAME }} \
-                --image ${{ env.DROPLET_IMAGE}} \
-                --region ${{ env.DROPLET_REGION }} \
-                --size ${{ env.DROPLET_SIZE }} \
-                --ssh-keys ${{ steps.create_ssh_id.outputs.key_id }} \
-                --wait \
-                --no-header \
-                --format PublicIPv4)
+      # - name: Create JupyterLab Droplet
+      #   id: create_droplet
+      #   run: |
+      #     DO_PUBLIC_ID=$(doctl compute droplet create ${{ env.DROPLET_NAME }} \
+      #           --image ${{ env.DROPLET_IMAGE}} \
+      #           --region ${{ env.DROPLET_REGION }} \
+      #           --size ${{ env.DROPLET_SIZE }} \
+      #           --ssh-keys ${{ steps.create_ssh_id.outputs.key_id }} \
+      #           --wait \
+      #           --no-header \
+      #           --format PublicIPv4)
 
-          echo ::set-output name=public_id::$DO_PUBLIC_ID
+      #     echo ::set-output name=public_id::$DO_PUBLIC_ID
 
       - name: Destroy SSH Key
         run: |
           doctl compute ssh-key delete ${{ steps.create_ssh_id.outputs.key_id }} --force          
 
-      - name: Deploy Docker to JupyterLab Droplet
-        uses: appleboy/ssh-action@v0.1.2
-        with:
-          host: ${{ steps.create_droplet.outputs.public_id }}
-          key: ${{ steps.create_ssh_id.outputs.ssh_key }}
-          username: root
+      # - name: Deploy Docker to JupyterLab Droplet
+      #   uses: appleboy/ssh-action@v0.1.2
+      #   with:
+      #     host: ${{ steps.create_droplet.outputs.public_id }}
+      #     key: ${{ steps.create_ssh_id.outputs.ssh_key }}
+      #     username: root
      
-          script: |
-            mkdir test 
-            cd test 
-            echo 'Deployment successful to digital ocean' 
+      #     script: |
+      #       mkdir test 
+      #       cd test 
+      #       echo 'Deployment successful to digital ocean' 
+
+      - name: Echo ssh key
+        run: |
+          echo ${{ steps.create_ssh_id.outputs.ssh_key }}
