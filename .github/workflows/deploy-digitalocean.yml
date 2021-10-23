@@ -40,6 +40,10 @@ jobs:
           export SSH_KEY_PUBLIC=$(cat ~/.ssh/id_rsa.pub)
           export DO_SSH_KEY=$(doctl compute ssh-key create github --verbose --public-key "$SSH_KEY_PUBLIC" --no-header --format ID)
           export DO_PUBLIC_ID=$(doctl compute droplet create ${{ env.DROPLET_NAME }} --image ${{ env.DROPLET_IMAGE}} --region ${{ env.DROPLET_REGION }} --size ${{ env.DROPLET_SIZE }} --ssh-keys $DO_SSH_KEY --wait --no-header --format PublicIPv4)
-          doctl compute ssh-key delete $DO_SSH_KEY
+          doctl compute ssh-key delete $DO_SSH_KEY --force
 
           echo "PUBLIC ID = $DO_PUBLIC_ID"
+
+          ssh root@$DO_PUBLIC_ID <<'ENDSSH'
+          echo "Hello World" > ~/Message
+          ENDSSH
