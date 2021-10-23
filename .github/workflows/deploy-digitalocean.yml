@@ -39,7 +39,7 @@ jobs:
         run: |
           export SSH_KEY_PUBLIC=$(cat ~/.ssh/id_rsa.pub)
           export DO_SSH_KEY=$(doctl compute ssh-key create github --verbose --public-key "$SSH_KEY_PUBLIC" --no-header --format ID)
-          export DO_PUBLIC_ID = $(doctl compute droplet create ${{ env.DROPLET_NAME }} --image ${{ env.DROPLET_IMAGE}} --region ${{ env.DROPLET_REGION }} --size ${{ env.DROPLET_SIZE }} --ssh-keys $DO_SSH_KEY --wait --no-header --format PublicIPv4)
+          export DO_PUBLIC_ID=$(doctl compute droplet create ${{ env.DROPLET_NAME }} --image ${{ env.DROPLET_IMAGE}} --region ${{ env.DROPLET_REGION }} --size ${{ env.DROPLET_SIZE }} --ssh-keys $DO_SSH_KEY --wait --no-header --format PublicIPv4)
           doctl compute ssh-key delete $DO_SSH_KEY
 
           echo "PUBLIC ID = $DO_PUBLIC_ID"
