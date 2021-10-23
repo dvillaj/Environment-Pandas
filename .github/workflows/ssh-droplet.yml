@@ -6,6 +6,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: check 22 port
+        run: |
+          nc -zvw10 ${{ steps.create_droplet.outputs.public_ip }} 22 
+
       - name: Deploy app
         uses: appleboy/ssh-action@v0.1.2
         with:
@@ -14,6 +18,5 @@ jobs:
           username: root
      
           script: |
-            mkdir test 
-            cd test 
+            ls
             echo 'Deployment successful to digital ocean' 
