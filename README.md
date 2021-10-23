@@ -1,4 +1,5 @@
-[![Deployed to DockerHub](https://github.com/dvillaj/Environment-Pandas/actions/workflows/deploy-dockerhub.yml/badge.svg)](https://github.com/dvillaj/Environment-Pandas/actions/workflows/deploy-dockerhub.yml)
+[![Deploy to DockerHub](https://github.com/dvillaj/Environment-Pandas/actions/workflows/deploy-dockerhub.yml/badge.svg)](https://github.com/dvillaj/Environment-Pandas/actions/workflows/deploy-dockerhub.yml)
+[![Deploy to DigitalOcean](https://github.com/dvillaj/Environment-Pandas/actions/workflows/deploy-digitalocean.yml/badge.svg)](https://github.com/dvillaj/Environment-Pandas/actions/workflows/deploy-digitalocean.yml)
 
 # Pandas Environment
 

@@ -80,7 +80,7 @@ jobs:
 
             /usr/bin/docker run -d -p 80:8888 \
                     -v /opt/jupyterlab/notebooks:/home/notebooks \
-                    -e JUPYTERLAB_TOKEN=${{ github.event.inputs.token }}" \
+                    -e JUPYTERLAB_TOKEN=${{ github.event.inputs.token }} \
                     --name jupyterlab \
                     --restart always \
                     ${{ env.DOCKERHUB_USER }}/${{ env.IMAGE_NAME }}:latest
