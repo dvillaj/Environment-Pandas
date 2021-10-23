@@ -1,0 +1,20 @@
+name: Build & Deploy
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy app
+        uses: appleboy/ssh-action@v0.1.2
+        with:
+          host: 104.248.169.162
+          key: ${{secrets.SSH_KEY}} # Private or public key of the server
+          username: root
+     
+          script: |
+            mkdir test 
+            cd test 
+            echo 'Deployment successful to digital ocean' 
