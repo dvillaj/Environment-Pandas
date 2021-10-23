@@ -66,8 +66,8 @@ jobs:
       - name: Deploy Docker to JupyterLab Droplet
         uses: appleboy/ssh-action@v0.1.2
         with:
-          host: ${{ steps.create_droplet.outputs.ssh_key }}
-          key: ${{ steps.create_ssh_id.outputs.public_id }}
+          host: ${{ steps.create_droplet.outputs.public_id }}
+          key: ${{ steps.create_ssh_id.outputs.ssh_key }}
           username: root
      
           script: |
