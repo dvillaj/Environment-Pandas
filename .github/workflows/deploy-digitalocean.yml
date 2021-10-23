@@ -73,6 +73,7 @@ jobs:
 
       - name: Deploy Docker to JupyterLab Droplet
         run: |
+          sleep 5
           ssh -i ~/digitalocean -o "StrictHostKeyChecking no" root@${{ steps.create_droplet.outputs.public_ip }} bash <<EOF
           whoami
           EOF
