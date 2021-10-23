@@ -10,6 +10,7 @@ on:
 env:
   DOCKERHUB_USER: dvillaj
   IMAGE_NAME: jupyterlab-pandas
+  DUCKDNS_DOMAIN: jupyterlab-pandas
 
   DROPLET_NAME: jupyterlab-droplet
   DROPLET_SIZE: s-1vcpu-1gb
@@ -85,8 +86,10 @@ jobs:
                     --restart always \
                     ${{ env.DOCKERHUB_USER }}/${{ env.IMAGE_NAME }}:latest
 
+            curl -v https://duckdns.org/update/${{ env.DUCKDNS_DOMAIN }}/${{ secrets.DUCKDNS_TOKEN }}
+
 
       - name: Jupyterlab URL
         run: |
           echo JupyerLab is up and ready. Save a shortcut with the following link ...
-          echo http://${{ steps.create_droplet.outputs.public_ip }}/lab?token=${{ github.event.inputs.logLevel }}"
+          echo http://${{ env.DUCKDNS_DOMAIN }}.duckdns.org/lab?token=${{ github.event.inputs.token }}
