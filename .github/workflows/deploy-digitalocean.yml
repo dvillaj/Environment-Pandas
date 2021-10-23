@@ -37,9 +37,9 @@ jobs:
           DO_SSH_KEY_ID=$(doctl compute ssh-key create github --verbose --public-key "$SSH_KEY_PUBLIC" --no-header --format ID)
 
           SSH_KEY=$(cat ~/digitalocean)
-          SSH_KEY="${SSH_KEY//'%'/'%25'}"
+          #SSH_KEY="${SSH_KEY//'%'/'%25'}"
           SSH_KEY="${SSH_KEY//$'\n'/'%0A'}"
-          SSH_KEY="${SSH_KEY//$'\r'/'%0D'}"
+          #SSH_KEY="${SSH_KEY//$'\r'/'%0D'}"
 
           echo ::set-output name=key_id::$DO_SSH_KEY_ID
           echo ::set-output name=ssh_key_private::$SSH_KEY
