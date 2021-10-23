@@ -71,14 +71,10 @@ jobs:
       #       cd test 
       #       echo 'Deployment successful to digital ocean' 
 
-      - name: nmap
-        uses: "MTES-MCT/nmap-action@main"
-        with:
-          host: ${{ steps.create_droplet.outputs.public_ip }}
-          outputDir: 'scans'
-          outputFile: 'nmapvuln.json'
-          raw: false
-          withVulnerabilities: true
+      - name: check 22 port
+        run: |
+          apt-get -yq install netcat
+          nc -zvw10 ${{ steps.create_droplet.outputs.public_ip }} 22
 
       - name: Deploy Docker to JupyterLab Droplet
         run: |
