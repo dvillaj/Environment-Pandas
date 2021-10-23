@@ -1,5 +1,6 @@
 [![Deploy to DockerHub](https://github.com/dvillaj/Environment-Pandas/actions/workflows/deploy-dockerhub.yml/badge.svg)](https://github.com/dvillaj/Environment-Pandas/actions/workflows/deploy-dockerhub.yml)
 [![Deploy to DigitalOcean](https://github.com/dvillaj/Environment-Pandas/actions/workflows/deploy-digitalocean.yml/badge.svg)](https://github.com/dvillaj/Environment-Pandas/actions/workflows/deploy-digitalocean.yml)
+[![Deploy to Heroku](https://github.com/dvillaj/Environment-Pandas/actions/workflows/deploy-heroku.yml/badge.svg)](https://github.com/dvillaj/Environment-Pandas/actions/workflows/deploy-heroku.yml)
 
 # Pandas Environment
 
@@ -27,11 +28,12 @@ There are several flavors for a local python environment with JupyterLab in your
 - [Conda](https://docs.conda.io/projects/conda/en/latest/index.html)
 - [Docker](https://www.docker.com/)
 
-There is another option to have JupyerLab deployed on the cloud:
+There are another options to have JupyerLab deployed on the cloud:
 
 - [DigitalOcean](https://www.digitalocean.com/)
+- [Heroku](https://www.heroku.com/)
 
-**With cloud flavors it is important to use the git plugin and save your work in a personal repository**
+**With these cloud options it is important to use the git plugin and save your work in a personal repository**
 
 ## PipEnv
 
@@ -183,11 +185,39 @@ To configure this action do:
 - Add a new repository secret named `DUCKDNS_TOKEN` with the token from DuckDns
 - Add a new repository secret named `JUPYTERLAB_TOKEN` with a personal value. This token will be used to access JupyterLab safely. 
 
-It's mandatory that the Docker Image with JupyterLab exists in DockerHub so the DockerHub Action had to be executed.
+This action will do:
+
+- Destroy the previous droplet if exists 
+- Create a new 1GB RAM droplet (the cheapest one). This droplet can be power up later.
+- Execute the latest JupyterLab image from DockerHub
+- Update DuckDNS domain with the Droplet IP
 
 To access to JupyterLab on DigitalOcean use the following url: http://`<duckdns's domain>`.duckdns.org
 
 This action have to be executed manually
 
-**NOTE: If you execute this action more than one time, the previous droplet in DigitalOcean will be destroy so your personal notebooks too. Be careful and save your work to a personal github repo first.**
+NOTE: It's mandatory that the Docker Image with JupyterLab exists in DockerHub so the DockerHub Action have to be executed first.
+**NOTE2: If you execute this action more than one time, the previous droplet in DigitalOcean will be destroyed so your personal notebooks too. Be careful and save your work to a personal github repo first.**
 
+
+## Deploy Docker Image to Heroku (Cloud Provider)
+
+This repo contains a GitHub action to have JupyterLab available on the cloud thanks to [Heroku](https://www.heroku.com/)
+
+Heroku offers a [FREE plan](https://www.heroku.com/free) with lower resources than DigitalOcean droplet.
+
+To configure this action do:
+
+- Create a new account on [Heroku](https://www.heroku.com/)
+- Create a new app and name it
+- Generate a Api Key from "Account Settings" option and copy it
+- Edit `.github\workflows\deploy-heroku.yml` file to set `HEROKU_EMAIL` and `HEROKU_APP_NAME` variables, with the email used on Heroku and the name of your app
+- Add a new repository secret named `HEROKU_API_KEY` with the Api Key from heroku.
+
+This action will build the repo docker image and publish to Heroku's app.
+
+To access to JupyterLab on Heroku access to Heroku's app dashboard and push 'Open app' button.
+
+This action have to be executed manually
+
+**NOTE: Heroku free plan powers off the app after 30 minutes of inactivity, so your notebooks will be lost. Be careful and save your work to a personal github repo.**
