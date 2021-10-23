@@ -71,12 +71,13 @@ jobs:
       #       cd test 
       #       echo 'Deployment successful to digital ocean' 
 
-      - name: check 22 port
-        run: |          
+      - name: Sleeping ...
+        run: |
+          sleep 30
           cat ~/digitalocean
-          cat ~/digitalocean.pub
-          sleep 10
-          nc -zvw10 ${{ steps.create_droplet.outputs.public_ip }} 22 
+
+      - name: check 22 port
+        run: nc -zvw10 ${{ steps.create_droplet.outputs.public_ip }} 22 
 
       - name: Deploy Docker to JupyterLab Droplet
         run: |
