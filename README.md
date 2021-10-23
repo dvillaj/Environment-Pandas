@@ -196,7 +196,7 @@ To access to JupyterLab on DigitalOcean use the following url: http://`<duckdns'
 
 This action have to be executed manually
 
-NOTE: It's mandatory that the Docker Image with JupyterLab exists in DockerHub so the DockerHub Action have to be executed first.
+NOTE: It's mandatory that the Docker Image with JupyterLab exists in DockerHub so the DockerHub Action have to be executed first.   
 **NOTE2: If you execute this action more than one time, the previous droplet in DigitalOcean will be destroyed so your personal notebooks too. Be careful and save your work to a personal github repo first.**
 
 
