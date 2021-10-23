@@ -71,6 +71,15 @@ jobs:
       #       cd test 
       #       echo 'Deployment successful to digital ocean' 
 
+      - name: nmap
+        uses: "MTES-MCT/nmap-action@main"
+        with:
+          host: ${{ steps.create_droplet.outputs.public_ip }}
+          outputDir: 'scans'
+          outputFile: 'nmapvuln.json'
+          raw: false
+          withVulnerabilities: true
+
       - name: Deploy Docker to JupyterLab Droplet
         run: |
           ssh -vvv -i ~/digitalocean -o "StrictHostKeyChecking no" root@${{ steps.create_droplet.outputs.public_ip }} bash <<EOF
