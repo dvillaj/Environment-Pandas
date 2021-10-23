@@ -185,4 +185,9 @@ To configure this action do:
 
 It's mandatory that the Docker Image with JupyterLab exists in DockerHub so the DockerHub Action had to be executed.
 
-After this GitHub Actions ends, you can access to JupyterLab with the following url: http://`<duckdns's domain>`.duckdns.org
+To access to JupyterLab on DigitalOcean use the following url: http://`<duckdns's domain>`.duckdns.org
+
+This action have to be executed manually
+
+**NOTE: If you execute this action more than one time, the previous droplet in DigitalOcean will be destroy so your personal notebooks too. Be careful and save your work to a personal github repo first.**
+
