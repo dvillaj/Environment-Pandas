@@ -1,11 +1,7 @@
 name: Deploy to DigitalOcean
 
 on: 
-  workflow_dispatch:
-    inputs:
-      token:
-        description: 'JypyterLab TOKEN'     
-        required: true
+  workflow_dispatch
 
 env:
   DOCKERHUB_USER: dvillaj
@@ -81,15 +77,9 @@ jobs:
 
             /usr/bin/docker run -d -p 80:8888 \
                     -v /opt/jupyterlab/notebooks:/home/notebooks \
-                    -e JUPYTERLAB_TOKEN=${{ github.event.inputs.token }} \
+                    -e JUPYTERLAB_TOKEN=${{ secrets.JUPYTERLAB_TOKEN }} \
                     --name jupyterlab \
                     --restart always \
                     ${{ env.DOCKERHUB_USER }}/${{ env.IMAGE_NAME }}:latest
 
-            curl -v https://duckdns.org/update/${{ env.DUCKDNS_DOMAIN }}/${{ secrets.DUCKDNS_TOKEN }}
-
-
-      - name: Jupyterlab URL
-        run: |
-          echo JupyerLab is up and ready. Save a shortcut with the following link ...
-          echo http://${{ env.DUCKDNS_DOMAIN }}.duckdns.org/lab?token=${{ github.event.inputs.token }}
+            curl https://www.duckdns.org/update/${{ env.DUCKDNS_DOMAIN }}/${{ secrets.DUCKDNS_TOKEN }}
