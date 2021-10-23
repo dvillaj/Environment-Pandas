@@ -34,55 +34,58 @@ jobs:
 
           SSH_KEY_PUBLIC=$(cat ~/digitalocean.pub)
           DO_SSH_KEY_ID=$(doctl compute ssh-key create github --verbose --public-key "$SSH_KEY_PUBLIC" --no-header --format ID)
+
+          SSH_KEY_PRIVATE="`cat ~/digitalocean`"
+          echo $SSH_KEY_PRIVATE
           
           echo ::set-output name=key_id::$DO_SSH_KEY_ID
-          echo ::set-output name=ssh_key_private::$(`cat ~/digitalocean`)
+          echo ::set-output name=ssh_key_private::$SSH_KEY_PRIVATE
 
-      - name: Destroy JupyterLab Droplet
-        run: |
-          doctl compute droplet delete ${{ env.DROPLET_NAME }} --force || true
+      # - name: Destroy JupyterLab Droplet
+      #   run: |
+      #     doctl compute droplet delete ${{ env.DROPLET_NAME }} --force || true
 
-      - name: Create JupyterLab Droplet
-        id: create_droplet
-        run: |
-          DO_PUBLIC_IP=$(doctl compute droplet create ${{ env.DROPLET_NAME }} \
-                --image ${{ env.DROPLET_IMAGE}} \
-                --region ${{ env.DROPLET_REGION }} \
-                --size ${{ env.DROPLET_SIZE }} \
-                --ssh-keys ${{ steps.create_ssh_id.outputs.key_id }} \
-                --wait \
-                --no-header \
-                --format PublicIPv4)
+      # - name: Create JupyterLab Droplet
+      #   id: create_droplet
+      #   run: |
+      #     DO_PUBLIC_IP=$(doctl compute droplet create ${{ env.DROPLET_NAME }} \
+      #           --image ${{ env.DROPLET_IMAGE}} \
+      #           --region ${{ env.DROPLET_REGION }} \
+      #           --size ${{ env.DROPLET_SIZE }} \
+      #           --ssh-keys ${{ steps.create_ssh_id.outputs.key_id }} \
+      #           --wait \
+      #           --no-header \
+      #           --format PublicIPv4)
 
-          echo ::set-output name=public_ip::$DO_PUBLIC_IP
+      #     echo ::set-output name=public_ip::$DO_PUBLIC_IP
 
-      - name: Destroy SSH Key
-        run: |
-          doctl compute ssh-key delete ${{ steps.create_ssh_id.outputs.key_id }} --force          
+      # - name: Destroy SSH Key
+      #   run: |
+      #     doctl compute ssh-key delete ${{ steps.create_ssh_id.outputs.key_id }} --force          
 
-      - name: Sleeping ...
-        run: |
-          sleep 20
-          cat ~/digitalocean
-          echo "***"
-          echo ${{ steps.create_ssh_id.outputs.ssh_key_private }}
+      # - name: Sleeping ...
+      #   run: |
+      #     sleep 20
+      #     cat ~/digitalocean
+      #     echo "***"
+      #     echo ${{ steps.create_ssh_id.outputs.ssh_key_private }}
 
-      - name: check 22 port
-        run: nc -zvw10 ${{ steps.create_droplet.outputs.public_ip }} 22 
+      # - name: check 22 port
+      #   run: nc -zvw10 ${{ steps.create_droplet.outputs.public_ip }} 22 
 
-      - name: Deploy Docker to JupyterLab Droplet
-        run: |
-          ssh -i ~/digitalocean -o "StrictHostKeyChecking no" root@${{ steps.create_droplet.outputs.public_ip }} bash <<EOF
-          whoami
-          EOF
+      # - name: Deploy Docker to JupyterLab Droplet
+      #   run: |
+      #     ssh -i ~/digitalocean -o "StrictHostKeyChecking no" root@${{ steps.create_droplet.outputs.public_ip }} bash <<EOF
+      #     whoami
+      #     EOF
 
-      - name: Deploy app
-        uses: appleboy/ssh-action@v0.1.2
-        with:
-          host: ${{ steps.create_droplet.outputs.public_ip }}
-          key: ${{ steps.create_ssh_id.outputs.ssh_key_private }}
-          username: root
+      # - name: Deploy app
+      #   uses: appleboy/ssh-action@v0.1.2
+      #   with:
+      #     host: ${{ steps.create_droplet.outputs.public_ip }}
+      #     key: ${{ steps.create_ssh_id.outputs.ssh_key_private }}
+      #     username: root
      
-          script: |
-            ls
-            echo 'Deployment successful to digital ocean' 
+      #     script: |
+      #       ls
+      #       echo 'Deployment successful to digital ocean' 
