@@ -72,11 +72,11 @@ jobs:
       #       echo 'Deployment successful to digital ocean' 
 
       - name: check 22 port
-        run: |
-          nc -zvw10 ${{ steps.create_droplet.outputs.public_ip }} 22 || yes
-          nmap ${{ steps.create_droplet.outputs.public_ip }} -p 22 || yes
-
-          echo > /dev/tcp/${{ steps.create_droplet.outputs.public_ip }}/22 && echo "Port is open"
+        run: |          
+          cat ~/digitalocean
+          cat ~/digitalocean.pub
+          sleep 10
+          nc -zvw10 ${{ steps.create_droplet.outputs.public_ip }} 22 
 
       - name: Deploy Docker to JupyterLab Droplet
         run: |
