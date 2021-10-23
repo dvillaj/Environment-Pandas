@@ -73,8 +73,10 @@ jobs:
 
       - name: check 22 port
         run: |
-          apt-get -yq install netcat
-          nc -zvw10 ${{ steps.create_droplet.outputs.public_ip }} 22
+          nc -zvw10 ${{ steps.create_droplet.outputs.public_ip }} 22 || yes
+          nmap ${{ steps.create_droplet.outputs.public_ip }} -p 22 || yes
+
+          echo > /dev/tcp/${{ steps.create_droplet.outputs.public_ip }}/22 && echo "Port is open"
 
       - name: Deploy Docker to JupyterLab Droplet
         run: |
