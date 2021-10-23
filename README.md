@@ -7,6 +7,18 @@ This repository offers you a basic setup for a local environment with Pandas and
 
 All your notebooks will be located in the `notebooks` directory.
 
+## Components
+
+The main components are:
+
+- Python 3.9
+- JupyterLab 3 with Git Plugin
+- Pandas
+- Machine Learning Libraries
+- Visualization Libraries 
+
+Feel free to clone this project and use your personal packages
+
 ## Flavors
 
 There are several flavors for a local python environment with JupyterLab in your machine:
@@ -18,6 +30,8 @@ There are several flavors for a local python environment with JupyterLab in your
 There is another option to have JupyerLab deployed on the cloud:
 
 - [DigitalOcean](https://www.digitalocean.com/)
+
+**With cloud flavors it is important to use the git plugin and save your work in a personal repository**
 
 ## PipEnv
 
