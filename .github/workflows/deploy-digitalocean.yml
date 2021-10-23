@@ -36,6 +36,7 @@ jobs:
           DO_SSH_KEY_ID=$(doctl compute ssh-key create github --verbose --public-key "$SSH_KEY_PUBLIC" --no-header --format ID)
           
           echo ::set-output name=key_id::$DO_SSH_KEY_ID
+          echo ::set-output name=ssh_key_private::$(cat ~/digitalocean)
 
       - name: Destroy JupyterLab Droplet
         run: |
@@ -73,8 +74,12 @@ jobs:
 
       - name: Sleeping ...
         run: |
-          sleep 30
+          sleep 20
           cat ~/digitalocean
+          echo "***"
+          echo ${{ steps.create_ssh_id.outputs.ssh_key_private }}
+
+          
 
       - name: check 22 port
         run: nc -zvw10 ${{ steps.create_droplet.outputs.public_ip }} 22 
@@ -84,3 +89,14 @@ jobs:
           ssh -vvv -i ~/digitalocean -o "StrictHostKeyChecking no" root@${{ steps.create_droplet.outputs.public_ip }} bash <<EOF
           whoami
           EOF
+
+      - name: Deploy app
+        uses: appleboy/ssh-action@v0.1.2
+        with:
+          host: ${{ steps.create_droplet.outputs.public_ip }}
+          key: ${{ steps.create_ssh_id.outputs.ssh_key_private }}
+          username: root
+     
+          script: |
+            ls
+            echo 'Deployment successful to digital ocean' 
