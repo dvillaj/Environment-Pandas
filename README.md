@@ -27,10 +27,10 @@ This is the simplest option. You only need python installed in your machine and 
 pip install pipenv
 ```
 
-Create a new isolated virtual environment and install all the packages from `requeriments.txt` file ...
+Create a new isolated virtual environment and install all the packages from `requirements.txt` file ...
 
 ```
-pipenv install -r requeriments.txt
+pipenv install -r requirements.txt
 ```
 
 ### JupyterLab with pipenv
@@ -41,7 +41,7 @@ Run Jupyter lab
 pipenv run jupyter lab --notebook-dir ./notebooks
 ```
 
-### Shotcut in Windows Exporer (Windows Only)
+### Shortcut in Windows Explorer (Windows Only)
 
 Create a link to launch Jupyter Lab from Windows Explorer:
 
@@ -57,9 +57,9 @@ Start in: [Project's Folder]
 pipenv update
 ```
 
-### Remove PipEnv Enrironment
+### Remove PipEnv Environment
 
-If you don't neeed the pipenv environment anymore (may be you need free space in your machine) run ...
+If you don't need the pipenv environment anymore (may be you need free space in your machine) run ...
 
 ```
 pipenv --rm
@@ -67,7 +67,7 @@ pipenv --rm
 
 ## Conda
 
-If PipEnv doesn't work (For instance in a new mac with a M1 procesor) you have other flavor using conda.
+If PipEnv doesn't work (For instance in a new mac with a M1 processor) you have other flavor using conda.
 
 To use conda you need to have a conda client installed. My recommendation is to install in your machine [MiniForge](https://github.com/conda-forge/miniforge) but if you have already installed [Anaconda](https://www.anaconda.com/) in your PC, it is ok.
 
@@ -80,11 +80,11 @@ conda create --yes -n environment-pandas python
 
 ```
 
-Activate the environment and install all the needed packages from `requeriments.txt` file ...
+Activate the environment and install all the needed packages from `requirements.txt` file ...
 
 ```
 conda activate environment-pandas
-conda install --yes --file requeriments.txt
+conda install --yes --file requirements.txt
 ```
 
 ### JupyterLab with Conda
@@ -96,7 +96,7 @@ conda activate environment-pandas
 jupyter lab --notebook-dir ./notebooks
 ```
 
-### Shotcut in Windows Exporer (Windows Only)
+### Shortcut in Windows Explorer (Windows Only)
 
 Create a link to launch Jupyter Lab from Windows Explorer:
 
@@ -115,7 +115,7 @@ conda update --all
 ### Remove Conda Environment
 
 
-If you don't neeed the conda environment anymore run ...
+If you don't need the conda environment anymore run ...
 
 ````
 conda env remove -n environment-pandas
@@ -127,6 +127,17 @@ With this option you don't need to have python installed in your local machine. 
 
 I have already created a [Docker image](https://github.com/dvillaj/Docker-JupyterLab-Pandas) for you so you only need to have Docker installed in your machine.
 
+### Execute Docker Image Locally
+
+If you have docker installed in your machine you can run a docker image with the following command and access to [JupyterLab](http://localhost:8888/lab)
+
+```
+docker-compose up
+```
+
+Press Control-C to exit 
+
+
 ### Deploy Docker Image to DockerHub
 
 This repo contains a GitHub action to publish automatically this image to DockerHub.
@@ -135,56 +146,29 @@ To configure this action do:
 
 - Create a new account on [DockerHub](https://hub.docker.com)
 - On DockerHub, create a new Access Token (Settings / Security) and copy it
-- Edit `.github\workflows\deploy-dockerhub.yml` file to set `DOCKERHUB_USER` and `IMAGE_NAME` variables, with the name account on DockerHub and the image name that will be pubished on DockerHub
-- Add a new repository secret named `DOCKERHUB_TOKEN` with the token creaat on DockerHub
+- Edit `.github\workflows\deploy-dockerhub.yml` file to set `DOCKERHUB_USER` and `IMAGE_NAME` variables, with the name account on DockerHub and the image name that will be published on DockerHub
+- Add a new repository secret named `DOCKERHUB_TOKEN` with the token from DockerHub
 
 
 This action will be executed when a new tag named `v*` is pushed to the repository
 
 
-### JupyterLab with Docker 
+## Deploy Docker Image to DigitalOcean (Cloud Provider)
 
-If you have docker installed in your machine you can run a docker image with the following command and access to [Jupyerlab](http://localhost:8888/lab)
+This repo contains a GitHub action to have JupyterLab available on the cloud thanks to [DigitalOcean](https://www.digitalocean.com/) and [DuckDns](https://www.duckdns.org/)
 
-```
-docker-compose up
-```
 
-Press Control-C to exit 
+**NOTE: This it not FREE and it will cost you about 5$ every month**
 
-## Run docker image at DigitalOcean
+To configure this action do:
 
-This last option is to have a JupyterLab enviroment on the cloud with [DigitalOcean](https://www.digitalocean.com/) (This is not free!)
+- Create a new account on [DigitalOcean](https://www.digitalocean.com/), generate a new Token (API menu) and copy it
+- Create a new account on [DuckDns](https://www.duckdns.org/), create a new domain and copy the token from the main page.
+- Edit `.github\workflows\deploy-digitalocean.yml` file to set `DOCKERHUB_USER` and `IMAGE_NAME` variables, with the name account on DockerHub and the image name that will be deployed in DigitalOcean. These values ​​should be the same as those used in the DockerHub action
+- Add a new repository secret named `DIGITALOCEAN_ACCESS_TOKEN` with the token from DigitalOcean
+- Add a new repository secret named `DUCKDNS_TOKEN` with the token from DuckDns
+- Add a new repository secret named `JUPYTERLAB_TOKEN` with a personal value. This token will be used to access JupyterLab safely. 
 
-Create a new droplet with the following characteristics:
+It's mandatory that the Docker Image with JupyterLab exists in DockerHub so the DockerHub Action had to be executed.
 
-- Docker on Ubuntu 20.04 Image from MarketPlace
-- Regular Intel with 1 GB / 1 CPU (The cheapest one)
-- London or Frankfurt Location (The nearest one)
-- Personal SSH Key (Create one if it is necessary)
-
-This droplet will cost you about 5$ / month
-
-Access the droplet and execute the following sentences ...
-
-```
-echo export TERM=vt100 > ~/.bashrc 
-source ~/.bashrc 
-
-mkdir -p /opt/jupyterlab/notebooks
-
-export TOKEN=`openssl rand -base64 14`
-export PUBLIC_IP=`dig +short myip.opendns.com @resolver1.opendns.com`
-
-/usr/bin/docker run -d -p 80:8888 \
-        -v /opt/jupyterlab/notebooks:/home/notebooks \
-        -e JUPYTERLAB_TOKEN=$TOKEN \
-        --name jupyterlab \
-        --restart always \
-        dvillaj/jupyterlab-pandas:latest
-
-echo JupyerLab is up and ready. Save a shortcut with the following link ...
-echo http://${PUBLIC_IP}/lab?token=${TOKEN}
-```
-
-You may want to use a personal dns thanks to [DuckDNS](https://www.duckdns.org/)
+After this GitHub Actions ends, you can access to JupyterLab with the following url: http://`<duckdns's domain>`.duckdns.org

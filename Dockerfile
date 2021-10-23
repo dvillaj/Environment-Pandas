@@ -3,12 +3,12 @@ FROM python:3.9.7-slim-buster
 
 WORKDIR /home/notebooks
 
-COPY requeriments.txt /opt/jupyterlab/
+COPY requirements.txt /opt/jupyterlab/
 
 RUN apt update && \
     apt install -y git htop vim procps && \
     pip install -U pip && \
-    pip install -r /opt/jupyterlab/requeriments.txt 
+    pip install -r /opt/jupyterlab/requirements.txt 
 
 ENV PORT=8888
 
