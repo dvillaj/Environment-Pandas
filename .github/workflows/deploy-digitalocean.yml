@@ -68,10 +68,7 @@ jobs:
 
       - name: Sleeping ...
         run: |
-          sleep 20
-          cat ~/digitalocean
-          echo "***"
-          echo ${{ steps.create_ssh_id.outputs.ssh_key_private }}
+          sleep 15
 
       - name: check 22 port
         run: nc -zvw10 ${{ steps.create_droplet.outputs.public_ip }} 22 
