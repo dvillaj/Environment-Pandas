@@ -190,7 +190,9 @@ To configure this action do:
 This action will be executed automatically when a new tag named `v*` is pushed to the repository
 
 
-## Deploy Docker Image to DigitalOcean (Cloud Provider)
+## DigitalOcean
+
+### Deploy Docker Image to DigitalOcean
 
 This repo contains a GitHub action to have JupyterLab available on the cloud thanks to [DigitalOcean](https://www.digitalocean.com/) and [DuckDns](https://www.duckdns.org/)
 
@@ -221,7 +223,9 @@ NOTE: It's mandatory that the Docker Image with JupyterLab exists in DockerHub s
 NOTE2: Execute the `Destroy to DigitalOcean Infrastructure` Github's action to destroy the JupyterLab droplet on DigitalOcean and save money (You will have to do this if you want to execute this action a second time!)
 
 
-## Deploy Docker Image to Heroku (Cloud Provider)
+## Heroku
+
+### Deploy Docker Image to Heroku
 
 This repo contains a GitHub action to have JupyterLab available on the cloud thanks to [Heroku](https://www.heroku.com/)
 
