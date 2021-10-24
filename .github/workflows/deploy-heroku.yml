@@ -11,7 +11,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout files
         uses: actions/checkout@v2
 
       - name: Build, Push and Release a Docker container to Heroku.
@@ -23,5 +23,5 @@ jobs:
           heroku_app_name: ${{ env.HEROKU_APP_NAME }}
           dockerfile_directory: ./
           dockerfile_name: Dockerfile
-          docker_options: "--no-cache"
+          docker_options: "--no-cache --build-arg JUPYTERLAB_TOKEN=${{ secrets.JUPYTERLAB_TOKEN }}"
           process_type: web
