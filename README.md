@@ -39,10 +39,10 @@ There are another options to have JupyerLab deployed on the cloud for accessing 
 
 |Flavor|Execution Type|Python version|Node Js|Memory|Disk Space|User's Notebooks|
 |-|-|-|-|-|-|-|
-|PipEnv / Conda|Local|Python version installed at local computer|**If installed** (Some JupyterLab extensions will need NodeJs)|Local Computer's memory|Local computer's disk space|Local: `notebooks` subdirectory|
-|Docker|Local|Python version specified at `DockerFile` (Python installed locally is not needed)|Yes|Local Computer's memory|Local computer's disk space|Local: Any directory specified at `docker-compose.yml` file|
+|PipEnv (**simplest option**)/ Conda|Local|Python version installed at local computer|**If installed** (Some JupyterLab extensions will need NodeJs)|Local Computer's memory|Local computer's disk space|Local: `notebooks` subdirectory|
+|Docker (**Docker software have to be installed**)|Local|Python version specified at `DockerFile` (Python installed locally is not needed)|Yes|Local Computer's memory|Local computer's disk space|Local: Any directory specified at `docker-compose.yml` file|
 |DigitalOcean (**Not Free: 5$/Month)**|Cloud (Deployed with DockerHub's image)|Python version specified at `DockerFile`|Yes|1 GB (Can be increased paying more money)|25 GB (Can be increased paying more money|Remote directory|
-|Heroku (**Free but lower resorces**)|Cloud (Deployed with `Dockerfile`)|Python version specified at `DockerFile`|Yes| 512 MB|100 MB|Remote directory (**It will be deteted after 30 minutes of inactivity**)|
+|Heroku (**Free but with lower resources**)|Cloud (Deployed with `Dockerfile`)|Python version specified at `DockerFile`|Yes| 512 MB|100 MB|Remote directory (**It will be deteted after 30 minutes of inactivity**)|
 
 NOTE: To save your personal notebooks located in a remote directory you can use JupyterLab's `Git extension` to sync your code with remote git server (GitHub or similar)
 
