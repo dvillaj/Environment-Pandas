@@ -1,5 +1,5 @@
 # Dockerfile for working with Jupyter notebooks 
-FROM python:3.9.7-slim-buster
+FROM nikolaik/python-nodejs:python3.9-nodejs14-slim
 
 WORKDIR /home/notebooks
 

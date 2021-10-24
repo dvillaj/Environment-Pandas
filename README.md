@@ -145,13 +145,18 @@ I have already created a [Docker image](https://github.com/dvillaj/Docker-Jupyte
 
 ### Execute Docker Image Locally
 
-If you have docker installed in your machine you can run a docker image with the following command and access to [JupyterLab](http://localhost:8888/lab)
+If you have docker installed in your machine you can execute a docker image with the following command:
 
 ```
 docker-compose up
 ```
 
 Press Control-C to exit 
+
+
+NOTE: Use `docker compose up --build` if you change the `DockerFile` and want to build it.
+
+To access to JupyterLab use the following url: http://localhost:8888/
 
 
 ### Deploy Docker Image to DockerHub

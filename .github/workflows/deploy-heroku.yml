@@ -14,6 +14,11 @@ jobs:
       - name: Checkout files
         uses: actions/checkout@v2
 
+     - name: Update JUPYTERLAB_TOKEN on Heroku
+        run: heroku config:set JUPYTERLAB_TOKEN=${{ secrets.JUPYTERLAB_TOKEN }} -a ${{ env.HEROKU_APP_NAME }}
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}        
+
       - name: Build, Push and Release a Docker container to Heroku.
         uses: gonuit/heroku-docker-deploy@v1.3.2
         with:
@@ -23,5 +28,6 @@ jobs:
           heroku_app_name: ${{ env.HEROKU_APP_NAME }}
           dockerfile_directory: ./
           dockerfile_name: Dockerfile
-          docker_options: "--no-cache --build-arg JUPYTERLAB_TOKEN=${{ secrets.JUPYTERLAB_TOKEN }}"
+          docker_options: "--no-cache"
           process_type: web
+         
