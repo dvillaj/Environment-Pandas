@@ -4,7 +4,7 @@
 
 # Pandas Environment
 
-This repository offers you a basic setup for a local / cloud environment with Pandas and JupyterLab + Git Plugin
+This repository offers you a basic setup for a **local** / **cloud** environment with Pandas and JupyterLab
 
 Feel free to clone this project and configure it with your personal packages
 
@@ -24,14 +24,15 @@ The main components are:
 
 There are several flavors for a local python environment with JupyterLab in your machine:
 
-- [PipEnv](https://pipenv.pypa.io/en/latest/)
-- [Conda](https://docs.conda.io/projects/conda/en/latest/index.html)
-- [Docker](https://www.docker.com/)
+[here](#place-2)
+- [PipEnv](##PipEnv)
+- [Conda](##Conda)
+- [Docker](##Docker)
 
 There are another options to have JupyerLab deployed on the cloud for accessing it everywhere:
 
-- [DigitalOcean](https://www.digitalocean.com/)
-- [Heroku](https://www.heroku.com/)
+- [DigitalOcean](##DigitalOcean)
+- [Heroku](##Heroku)
 
 
 ### Comparative
@@ -39,10 +40,11 @@ There are another options to have JupyerLab deployed on the cloud for accessing 
 
 |Flavor|Execution Type|Python version|Node Js|Memory|Disk Space|User's Notebooks|
 |-|-|-|-|-|-|-|
-|PipEnv (**simplest option**)/ Conda|Local|Python version installed at local computer|**If installed** (Some JupyterLab extensions will need NodeJs)|Local Computer's memory|Local computer's disk space|Local: `notebooks` subdirectory|
-|Docker (**Docker software have to be installed**)|Local|Python version specified at `DockerFile` (Python installed locally is not needed)|Yes|Local Computer's memory|Local computer's disk space|Local: Any directory specified at `docker-compose.yml` file|
-|DigitalOcean (**Not Free: 5$/Month)**|Cloud (Deployed with DockerHub's image)|Python version specified at `DockerFile`|Yes|1 GB (Can be increased paying more money)|25 GB (Can be increased paying more money|Remote directory|
-|Heroku (**Free but with lower resources**)|Cloud (Deployed with `Dockerfile`)|Python version specified at `DockerFile`|Yes| 512 MB|100 MB|Remote directory (**It will be deteted after 30 minutes of inactivity**)|
+|[PipEnv](https://pipenv.pypa.io/en/latest/) (**simplest option**)/ [Conda](https://docs.conda.io/projects/conda/en/latest/index.html)|Local|Python version installed at local computer|**If installed** (Some JupyterLab extensions will need NodeJs)|Local Computer's memory|Local computer's disk space|Local: `notebooks` subdirectory|
+|[Docker](https://www.docker.com/) (**Docker software have to be installed**)|Local|Python version specified at `DockerFile` (Python installed locally is not needed)|Yes|Local Computer's memory|Local computer's disk space|Local: Any directory specified at `docker-compose.yml` file|
+|[DigitalOcean](https://www.digitalocean.com/) (**Not Free: 5$/Month)**|Cloud (Deployed with DockerHub's image)|Python version specified at `DockerFile`|Yes|1 GB (Can be increased paying more money)|25 GB (Can be increased paying more money|Remote directory|
+|[Heroku](https://www.heroku.com/)
+ (**Free but with lower resources**)|Cloud (Deployed with `Dockerfile`)|Python version specified at `DockerFile`|Yes| 512 MB|100 MB|Remote directory (**It will be deteted after 30 minutes of inactivity**)|
 
 NOTE: To save your personal notebooks located in a remote directory you can use JupyterLab's `Git extension` to sync your code with remote git server (GitHub or similar)
 
