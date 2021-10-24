@@ -11,7 +11,8 @@ env:
   DROPLET_NAME: jupyterlab-droplet
   DROPLET_SIZE: s-1vcpu-1gb
   DROPLET_REGION: LON1
-  DROPLET_IMAGE: docker-20-04 
+  DROPLET_IMAGE: docker-20-04
+  DROPLET_TAG: jupyterlab
 
 jobs:
   build:
@@ -23,6 +24,21 @@ jobs:
         uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: Check JupyterLab Droplet
+        run: |
+          DO_ID=$(doctl compute droplet list \
+                --tag-name ${{ env.DROPLET_TAG }}  \
+                --no-header \
+                --format ID)
+
+          if [ -z "$DO_ID" ]
+          then
+              echo "JupyterLab Droplet does not exist. Good :-)"
+          else
+              echo "JupyterLab Droplet exists. Destroy it before execute this action!"
+              exit 1
+          fi
 
       - name: Create SSH key and publish to DigitalOcean
         id: create_ssh_id
@@ -45,6 +61,7 @@ jobs:
                 --image ${{ env.DROPLET_IMAGE}} \
                 --region ${{ env.DROPLET_REGION }} \
                 --size ${{ env.DROPLET_SIZE }} \
+                --tag-name ${{ env.DROPLET_TAG }} \
                 --ssh-keys ${{ steps.create_ssh_id.outputs.key_id }} \
                 --wait \
                 --no-header \
@@ -65,7 +82,7 @@ jobs:
         uses: appleboy/ssh-action@v0.1.2
         with:
           host: ${{ steps.create_droplet.outputs.public_ip }}
-          key: "${{ steps.create_ssh_id.outputs.ssh_key_private }}"
+          key: ${{ steps.create_ssh_id.outputs.ssh_key_private }}
           username: root
      
           script: |

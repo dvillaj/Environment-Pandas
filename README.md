@@ -6,19 +6,20 @@
 
 This repository offers you a basic setup for a local environment with Pandas and JupyterLab + Git Plugin
 
-All your notebooks will be located in the `notebooks` directory.
+All your personal notebooks will be located in the `notebooks` directory.
 
 ## Components
 
 The main components are:
 
 - Python 3.9
-- JupyterLab 3 with Git Plugin
+- JupyterLab 3
+- Several JupyterLab's extensions like [Git Extension](https://github.com/jupyterlab/jupyterlab-git)
 - Pandas
 - Machine Learning Libraries
 - Visualization Libraries 
 
-Feel free to clone this project and use your personal packages
+Feel free to clone this project and configure it with your personal packages
 
 ## Flavors
 
@@ -33,7 +34,17 @@ There are another options to have JupyerLab deployed on the cloud:
 - [DigitalOcean](https://www.digitalocean.com/)
 - [Heroku](https://www.heroku.com/)
 
-**With these cloud options it is important to use the git plugin and save your work in a personal repository**
+
+### Comparative
+
+
+|Flavor|Execution Type|Python version|Node Js|Memory|Disk Space|User's Notebooks|Cost|
+|-|-|-|-|-|-|-|-|
+|PipEnv / Conda|Local|Python version installed at local computer|If installed (Some JupyterLab extensions will need NodeJs)|Local Computer's memory|Local computer's disk space|Local: `notebooks` subdirectory|Free|
+|Docker|Local|Python version specified at `DockerFile` (Python installed locally is not needed)|Yes|Local Computer's memory|Local computer's disk space|Local: Any directory (specified at `docker-compose.yml` file)|Free|
+|DigitalOcean|Cloud (Deployed with DockerHub's image)|Python version specified at `DockerFile`|Yes|1 GB (Can be increased paying more money)|25 GB (Can be increased paying more money|Remote directory ( Use `Git extension` to sync your code with GitHub or similar)|5$ / Month|
+|Heroku|Cloud (Deployed with `Dockerfile`)|Python version specified at `DockerFile`|Yes| 512 MB|100 MB|Remote directory: Use `Git extension` to sync your code with a remote git repository (Github,GitLab, etc.)|Free|
+
 
 ## PipEnv
 
@@ -139,13 +150,14 @@ conda env remove -n environment-pandas
 
 ## Docker
 
-With this option you don't need to have python installed in your local machine. JupyterLab is run thanks to Docker.
+With this option you don't need to have python installed in your local machine. JupyterLab is executed thanks to Docker.
 
-I have already created a [Docker image](https://github.com/dvillaj/Docker-JupyterLab-Pandas) for you so you only need to have Docker installed in your machine.
+NOTE: To use this option you have to install [Docker](https://docs.docker.com/get-docker/) in your computer.
+
 
 ### Execute Docker Image Locally
 
-If you have docker installed in your machine you can execute a docker image with the following command:
+You can execute a JupyterLab environment with Docker with the following command:
 
 ```
 docker-compose up
@@ -154,12 +166,15 @@ docker-compose up
 Press Control-C to exit 
 
 
-NOTE: Use `docker compose up --build` if you change the `DockerFile` and want to build it.
+NOTE: Use `docker compose up --build` if you change the `DockerFile` and want to build it again.
 
 To access to JupyterLab use the following url: http://localhost:8888/
 
 
 ### Deploy Docker Image to DockerHub
+
+Publish a Docker Image in DockerHub has the advantage that it can be executed from any computer without have to build it previously. DockerHub will store a feeze version of your image and it is free!
+
 
 This repo contains a GitHub action to publish automatically this image to DockerHub.
 
@@ -171,7 +186,7 @@ To configure this action do:
 - Add a new repository secret named `DOCKERHUB_TOKEN` with the token from DockerHub
 
 
-This action will be executed when a new tag named `v*` is pushed to the repository
+This action will be executed automatically when a new tag named `v*` is pushed to the repository
 
 
 ## Deploy Docker Image to DigitalOcean (Cloud Provider)
@@ -192,8 +207,7 @@ To configure this action do:
 
 This action will do:
 
-- Destroy the previous droplet if exists 
-- Create a new 1GB RAM droplet (the cheapest one). This droplet can be power up later.
+- Create a new 1 GB RAM droplet (the cheapest one). This droplet can be power up later on DigitalOcean dashboard.
 - Execute the latest JupyterLab image from DockerHub
 - Update DuckDNS domain with the Droplet IP
 
@@ -202,7 +216,7 @@ To access to JupyterLab on DigitalOcean use the following url: http://`<duckdns'
 This action have to be executed manually
 
 NOTE: It's mandatory that the Docker Image with JupyterLab exists in DockerHub so the DockerHub Action have to be executed first.   
-**NOTE2: If you execute this action more than one time, the previous droplet in DigitalOcean will be destroyed so your personal notebooks too. Be careful and save your work to a personal github repo first.**
+NOTE2: Execute the `Destroy to DigitalOcean Infrastructure` Github's action to destroy the JupyterLab droplet on DigitalOcean and save money (You will have to do this if you want to execute this action a second time!)
 
 
 ## Deploy Docker Image to Heroku (Cloud Provider)
