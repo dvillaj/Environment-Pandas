@@ -38,10 +38,6 @@ jobs:
           echo ::set-output name=key_id::$DO_SSH_KEY_ID
           echo ::set-output name=ssh_key_private::$SSH_KEY
 
-      - name: Destroy JupyterLab Droplet
-        run: |
-          doctl compute droplet delete ${{ env.DROPLET_NAME }} --force || true
-
       - name: Create JupyterLab Droplet
         id: create_droplet
         run: |
