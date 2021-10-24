@@ -6,6 +6,8 @@ on:
 env:
   DOCKERHUB_USER: dvillaj
   IMAGE_NAME: jupyterlab-pandas
+  IMAGE_LABE: latest
+  
   DUCKDNS_DOMAIN: jupyterlab-pandas
 
   DROPLET_NAME: jupyterlab-droplet
@@ -93,6 +95,6 @@ jobs:
                     -e JUPYTERLAB_TOKEN=${{ secrets.JUPYTERLAB_TOKEN }} \
                     --name jupyterlab \
                     --restart always \
-                    ${{ env.DOCKERHUB_USER }}/${{ env.IMAGE_NAME }}:latest
+                    ${{ env.DOCKERHUB_USER }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_LABEL }}
 
             curl https://www.duckdns.org/update/${{ env.DUCKDNS_DOMAIN }}/${{ secrets.DUCKDNS_TOKEN }}

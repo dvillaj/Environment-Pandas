@@ -4,9 +4,9 @@
 
 # Pandas Environment
 
-This repository offers you a basic setup for a local environment with Pandas and JupyterLab + Git Plugin
+This repository offers you a basic setup for a local / cloud environment with Pandas and JupyterLab + Git Plugin
 
-All your personal notebooks will be located in the `notebooks` directory.
+Feel free to clone this project and configure it with your personal packages
 
 ## Components
 
@@ -17,9 +17,8 @@ The main components are:
 - Several JupyterLab's extensions like [Git Extension](https://github.com/jupyterlab/jupyterlab-git)
 - Pandas
 - Machine Learning Libraries
-- Visualization Libraries 
-
-Feel free to clone this project and configure it with your personal packages
+- Visualization Libraries
+- Other python packages (`requeriments.txt` file)
 
 ## Flavors
 
@@ -29,7 +28,7 @@ There are several flavors for a local python environment with JupyterLab in your
 - [Conda](https://docs.conda.io/projects/conda/en/latest/index.html)
 - [Docker](https://www.docker.com/)
 
-There are another options to have JupyerLab deployed on the cloud:
+There are another options to have JupyerLab deployed on the cloud for accessing it everywhere:
 
 - [DigitalOcean](https://www.digitalocean.com/)
 - [Heroku](https://www.heroku.com/)
@@ -38,12 +37,14 @@ There are another options to have JupyerLab deployed on the cloud:
 ### Comparative
 
 
-|Flavor|Execution Type|Python version|Node Js|Memory|Disk Space|User's Notebooks|Cost|
-|-|-|-|-|-|-|-|-|
-|PipEnv / Conda|Local|Python version installed at local computer|If installed (Some JupyterLab extensions will need NodeJs)|Local Computer's memory|Local computer's disk space|Local: `notebooks` subdirectory|Free|
-|Docker|Local|Python version specified at `DockerFile` (Python installed locally is not needed)|Yes|Local Computer's memory|Local computer's disk space|Local: Any directory (specified at `docker-compose.yml` file)|Free|
-|DigitalOcean|Cloud (Deployed with DockerHub's image)|Python version specified at `DockerFile`|Yes|1 GB (Can be increased paying more money)|25 GB (Can be increased paying more money|Remote directory ( Use `Git extension` to sync your code with GitHub or similar)|5$ / Month|
-|Heroku|Cloud (Deployed with `Dockerfile`)|Python version specified at `DockerFile`|Yes| 512 MB|100 MB|Remote directory: Use `Git extension` to sync your code with a remote git repository (Github,GitLab, etc.)|Free|
+|Flavor|Execution Type|Python version|Node Js|Memory|Disk Space|User's Notebooks|
+|-|-|-|-|-|-|-|
+|PipEnv / Conda|Local|Python version installed at local computer|**If installed** (Some JupyterLab extensions will need NodeJs)|Local Computer's memory|Local computer's disk space|Local: `notebooks` subdirectory|
+|Docker|Local|Python version specified at `DockerFile` (Python installed locally is not needed)|Yes|Local Computer's memory|Local computer's disk space|Local: Any directory specified at `docker-compose.yml` file|
+|DigitalOcean (**Not Free: 5$/Month)**|Cloud (Deployed with DockerHub's image)|Python version specified at `DockerFile`|Yes|1 GB (Can be increased paying more money)|25 GB (Can be increased paying more money|Remote directory|
+|Heroku (**Free but lower resorces**)|Cloud (Deployed with `Dockerfile`)|Python version specified at `DockerFile`|Yes| 512 MB|100 MB|Remote directory (**It will be deteted after 30 minutes of inactivity**)|
+
+NOTE: To save your personal notebooks located in a remote directory you can use JupyterLab's `Git extension` to sync your code with remote git server (GitHub or similar)
 
 
 ## PipEnv
@@ -207,6 +208,7 @@ To configure this action do:
 
 This action will do:
 
+- Check if Droplet exists previosly (It will not be created twice)
 - Create a new 1 GB RAM droplet (the cheapest one). This droplet can be power up later on DigitalOcean dashboard.
 - Execute the latest JupyterLab image from DockerHub
 - Update DuckDNS domain with the Droplet IP
