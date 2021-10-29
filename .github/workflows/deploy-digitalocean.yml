@@ -6,7 +6,7 @@ on:
 env:
   DOCKERHUB_USER: dvillaj
   IMAGE_NAME: jupyterlab-pandas
-  IMAGE_LABE: latest
+  IMAGE_LABEL: latest
   
   DUCKDNS_DOMAIN: jupyterlab-pandas
 
