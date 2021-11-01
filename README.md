@@ -217,7 +217,7 @@ This action will do:
 
 To access to JupyterLab on DigitalOcean use the following url: http://`<duckdns's domain>`.duckdns.org
 
-Addionally you can monitor the droplet resources with Glances at http://`<duckdns's domain>`.duckdns.org:61208
+Addionally you can monitor the droplet resources with [Glances](https://nicolargo.github.io/glances/) at http://`<duckdns's domain>`.duckdns.org:61208
 
 
 This action have to be trigger manually
