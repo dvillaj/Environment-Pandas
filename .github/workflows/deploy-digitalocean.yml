@@ -24,6 +24,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Check Docker Image
+        run: |
+          docker login -u ${{ env.DOCKERHUB_USER }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+          docker manifest inspect ${{ env.IMAGE_NAME }}:${{ env.IMAGE_LABEL }} > /dev/null
+
+          retVal=$?
+          if [ $retVal -ne 0 ]; then
+            echo "Docker image does not exists :-("
+          else 
+            echo "Docker image does exists. Good :-)"
+          fi
+          exit $retVal
+
+
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
         with:
@@ -47,7 +61,7 @@ jobs:
       - name: Create SSH key and publish to DigitalOcean
         id: create_ssh_id
         run: |
-          ssh-keygen -N "" -f ~/digitalocean 
+          ssh-keygen -m PEM -N "" -f ~/digitalocean 
 
           SSH_KEY_PUBLIC=$(cat ~/digitalocean.pub)
           DO_SSH_KEY_ID=$(doctl compute ssh-key create github --verbose --public-key "$SSH_KEY_PUBLIC" --no-header --format ID)
@@ -108,7 +122,7 @@ jobs:
           server: ${{ steps.create_droplet.outputs.public_ip }}
           ssh_private_key: "${{ steps.create_ssh_id.outputs.ssh_key_private }}"
           local_path: './resources/digitalocean/*'
-          remote_path: '/opt/deploy'          
+          remote_path: '${{ env.DEPLOY_DIR }}'          
 
       - name: Deploy Services
         uses: appleboy/ssh-action@v0.1.2

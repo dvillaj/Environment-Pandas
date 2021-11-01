@@ -202,6 +202,7 @@ To configure this action do:
 - Create a new account on [DigitalOcean](https://www.digitalocean.com/), generate a new Token (API menu) and copy it
 - Create a new account on [DuckDns](https://www.duckdns.org/), create a new domain and copy the token from the main page.
 - Edit `.github\workflows\deploy-digitalocean.yml` file to set `DOCKERHUB_USER` and `IMAGE_NAME` variables, with the name account on DockerHub and the image name that will be deployed in DigitalOcean. These values ​​should be the same as those used in the DockerHub action
+- Add a new repository secret named `DOCKERHUB_TOKEN` with the token from DockerHub
 - Add a new repository secret named `DIGITALOCEAN_ACCESS_TOKEN` with the token from DigitalOcean
 - Add a new repository secret named `DUCKDNS_TOKEN` with the token from DuckDns
 - Add a new repository secret named `JUPYTERLAB_TOKEN` with a personal value. This token will be used to access JupyterLab safely. 
