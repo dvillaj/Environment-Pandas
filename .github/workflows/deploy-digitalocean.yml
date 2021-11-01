@@ -26,7 +26,8 @@ jobs:
     steps:
       - name: Check Docker Image
         run: |
-          docker login -u ${{ env.DOCKERHUB_USER }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+          export REGISTRY=https://index.docker.io/v1/
+          echo ${{ secrets.DOCKERHUB_TOKEN }} || docker login -u ${{ env.DOCKERHUB_USER }}  --password-stdin $REGISTRY
           docker manifest inspect ${{ env.IMAGE_NAME }}:${{ env.IMAGE_LABEL }} > /dev/null
 
           retVal=$?
