@@ -37,5 +37,6 @@ jobs:
 
       - name: Check Docker Image
         run: |
-          echo curl -sH "Authorization: JWT ${{ steps.docker_login.outputs.token }}" "https://hub.docker.com/v2/repositories/${{ env.IMAGE_NAME }}/tags/${{ env.IMAGE_LABEL }}/" | jq .
+          echo curl -sH "Authorization: JWT ${{ steps.docker_login.outputs.token }}" "https://hub.docker.com/v2/repositories/${{ env.IMAGE_NAME }}/tags/${{ env.IMAGE_LABEL }}/"
+          curl -sH "Authorization: JWT ${{ steps.docker_login.outputs.token }}" "https://hub.docker.com/v2/repositories/${{ env.IMAGE_NAME }}/tags/${{ env.IMAGE_LABEL }}/"
 
