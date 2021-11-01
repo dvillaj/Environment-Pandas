@@ -15,7 +15,7 @@ function installGlances {
     apt -qq update
     apt install -y glances
 
-    envsubst < $DEPLOY_DIR/glances.template  > /etc/systemd/system/glances.service
+    envsubst < $DEPLOY_DIR/services/glances.template  > /etc/systemd/system/glances.service
 
     systemctl enable glances.service
     systemctl daemon-reload
@@ -25,8 +25,7 @@ function installGlances {
 function installJupyterLab {
     echo "Installing JupyterLab ..."
 
-
-    envsubst < $ACTUAL_DIR/jupyterlab.template  > /etc/systemd/system/jupyterlab.service
+    envsubst < $DEPLOY_DIR/services/jupyterlab.template  > /etc/systemd/system/jupyterlab.service
 
     systemctl enable jupyterlab.service
     systemctl daemon-reload
