@@ -68,6 +68,7 @@ jobs:
       - name: Destroy SSH Key
         run: |
           doctl compute ssh-key delete ${{ steps.create_ssh_id.outputs.key_id }} --force         
+          sleep 15
 
 
       - name: Remove public key
@@ -81,7 +82,7 @@ jobs:
             grep -v "${{ steps.create_ssh_id.outputs.ssh_key_public }}" .ssh/authorized_keys > authorized_keys.new
             mv authorized_keys.new .ssh/authorized_keys
 
-      - name: Remove public key
+      - name: Hi
         uses: appleboy/ssh-action@v0.1.2
         with:
           host: ${{ steps.create_droplet.outputs.public_ip }}
