@@ -13,7 +13,7 @@ echo "Setting up JupyterLab box ..."
 source $DEPLOY_DIR/functions.sh
 
 createSwapMemory
-installGlances
+#installGlances
 installJupyterLab
 
 echo "Done :-)"

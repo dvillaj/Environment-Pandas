@@ -24,6 +24,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Check Docker Image
+        run: |
+          docker manifest inspect ${{ env.DOCKERHUB_USER }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_LABEL }} > /dev/null
+
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
         with:
@@ -127,7 +131,7 @@ jobs:
             chmod a+x $DEPLOY_DIR/deploy.sh
             $DEPLOY_DIR/deploy.sh
 
-            
+
       - name: Refresh DuckDNS IP
         uses: appleboy/ssh-action@v0.1.2
         with:
