@@ -1,0 +1,92 @@
+name: Deploy to DigitalOcean Lite
+
+on: 
+  workflow_dispatch
+
+env:
+  DOCKERHUB_USER: dvillaj
+  IMAGE_NAME: jupyterlab-pandas
+  IMAGE_LABEL: latest
+  
+  DUCKDNS_DOMAIN: jupyterlab-pandas
+
+  DROPLET_NAME: jupyterlab-droplet
+  DROPLET_SIZE: s-1vcpu-1gb
+  DROPLET_REGION: LON1
+  DROPLET_IMAGE: docker-20-04
+  DROPLET_TAG: jupyterlab
+
+  DEPLOY_DIR: /opt/deploy
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: Create SSH key and publish to DigitalOcean
+        id: create_ssh_id
+        run: |
+          ssh-keygen -m PEM -N "" -f ~/digitalocean 
+
+          SSH_KEY_PUBLIC=$(cat ~/digitalocean.pub)
+          DO_SSH_KEY_ID=$(doctl compute ssh-key create github --verbose --public-key "$SSH_KEY_PUBLIC" --no-header --format ID)
+
+          SSH_KEY=$(cat ~/digitalocean)
+          SSH_KEY="${SSH_KEY//$'\n'/'%0A'}"
+
+          echo ::set-output name=key_id::$DO_SSH_KEY_ID
+          echo ::set-output name=ssh_key_public::$SSH_KEY_PUBLIC
+          echo ::set-output name=ssh_key_private::$SSH_KEY
+
+      - name: Collect actual SSH Keys
+        id: actual_keys
+        run: |
+          SSH_KEYS=$(doctl compute ssh-key list --no-header --format ID |  tr '\n' ',')          
+          echo ::set-output name=keys_id::"${SSH_KEYS::-1}"
+
+      - name: Create JupyterLab Droplet
+        id: create_droplet
+        run: |
+          DO_PUBLIC_IP=$(doctl compute droplet create ${{ env.DROPLET_NAME }} \
+                --image ${{ env.DROPLET_IMAGE}} \
+                --region ${{ env.DROPLET_REGION }} \
+                --size ${{ env.DROPLET_SIZE }} \
+                --tag-name ${{ env.DROPLET_TAG }} \
+                --ssh-keys "${{ steps.actual_keys.outputs.keys_id }}" \
+                --wait \
+                --no-header \
+                --format PublicIPv4)
+
+          echo ::set-output name=public_ip::$DO_PUBLIC_IP
+
+      - name: Destroy SSH Key
+        run: |
+          doctl compute ssh-key delete ${{ steps.create_ssh_id.outputs.key_id }} --force         
+
+
+      - name: Remove public key
+        uses: appleboy/ssh-action@v0.1.2
+        with:
+          host: ${{ steps.create_droplet.outputs.public_ip }}
+          key: ${{ steps.create_ssh_id.outputs.ssh_key_private }}
+          username: root
+     
+          script: |
+            grep -v "${{ steps.create_ssh_id.outputs.ssh_key_public }}" .ssh/authorized_keys > authorized_keys.new
+            mv authorized_keys.new .ssh/authorized_keys
+
+      - name: Remove public key
+        uses: appleboy/ssh-action@v0.1.2
+        with:
+          host: ${{ steps.create_droplet.outputs.public_ip }}
+          key: ${{ steps.create_ssh_id.outputs.ssh_key_private }}
+          username: root
+     
+          script: |
+            echo hi            
