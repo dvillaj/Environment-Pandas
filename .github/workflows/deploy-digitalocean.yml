@@ -89,7 +89,7 @@ jobs:
         # We have to give some time to the droplet for starting the SSH service
       - name: Sleeping ...
         run: |
-          sleep 10
+          sleep 15
 
       - name: Create Deploy Directory
         uses: appleboy/ssh-action@v0.1.2
