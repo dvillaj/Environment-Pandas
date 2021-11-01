@@ -14,32 +14,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Docker Token
-        id: docker_login
-        run: |
-    
-
-          TOKEN=$(curl -s -H "Content-Type: application/json" -X POST -d '{"username": "'${{ env.DOCKERHUB_USER }}'", "password": "'${{ secrets.DOCKERHUB_TOKEN }}'"}' https://hub.docker.com/v2/users/login/ | jq -r .token)
-
-          echo ::set-output name=token::$TOKEN
-          # echo $?
-
-          # export REGISTRY=https://index.docker.io/v1/
-          # echo ${{ secrets.DOCKERHUB_TOKEN }} || docker login -u ${{ env.DOCKERHUB_USER }}  --password-stdin $REGISTRY
-          # docker manifest inspect ${{ env.IMAGE_NAME }}:${{ env.IMAGE_LABEL }} > /dev/null
-
-          # retVal=$?
-          # if [ $retVal -ne 0 ]; then
-          #   echo "Docker image does not exists :-("
-          # else 
-          #   echo "Docker image does exists. Good :-)"
-          # fi
-          # exit $retVal
-
-
       - name: Check Docker Image
         run: |
           # curl --silent -f --head -lL https://hub.docker.com/v2/repositories/${{ env.IMAGE_NAME }}/tags/${{ env.IMAGE_LABEL }}/ > /dev/null
 
-          docker manifest inspect ${{ env.DOCKERHUB_USER }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_LABEL }}
+          docker manifest inspect ${{ env.DOCKERHUB_USER }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_LABEL }}232 > /dev/null
+          echo $?
+
+          docker manifest inspect ${{ env.DOCKERHUB_USER }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_LABEL }} > /dev/null
+          echo $?
 

@@ -124,6 +124,15 @@ jobs:
             export JUPYTERLAB_IMAGE=${{ env.DOCKERHUB_USER }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_LABEL }}
             export DEPLOY_DIR=${{ env.DEPLOY_DIR }}
 
-            sh $DEPLOY_DIR/deploy.sh
+            chmod a+x $DEPLOY_DIR/deploy.sh
+            $DEPLOY_DIR/deploy.sh
 
-            curl https://www.duckdns.org/update/${{ env.DUCKDNS_DOMAIN }}/${{ secrets.DUCKDNS_TOKEN }}
+            
+      - name: Refresh DuckDNS IP
+        uses: appleboy/ssh-action@v0.1.2
+        with:
+          host: ${{ steps.create_droplet.outputs.public_ip }}
+          key: ${{ steps.create_ssh_id.outputs.ssh_key_private }}
+          username: root
+     
+          script: curl https://www.duckdns.org/update/${{ env.DUCKDNS_DOMAIN }}/${{ secrets.DUCKDNS_TOKEN }}
