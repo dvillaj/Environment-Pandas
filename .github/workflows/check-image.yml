@@ -17,8 +17,10 @@ jobs:
       - name: Docker Token
         id: docker_login
         run: |
+    
 
-          TOKEN=$( curl -sSLd "username=${{ env.DOCKERHUB_USER }}&password=${{ secrets.DOCKERHUB_TOKEN }}" https://hub.docker.com/v2/users/login | jq -r ".token" )
+          TOKEN=$(curl -s -H "Content-Type: application/json" -X POST -d '{"username": "'${{ env.DOCKERHUB_USER }}'", "password": "'${{ secrets.DOCKERHUB_TOKEN }}'"}' https://hub.docker.com/v2/users/login/ | jq -r .token)
+
           echo ::set-output name=token::$TOKEN
           # echo $?
 
@@ -37,6 +39,5 @@ jobs:
 
       - name: Check Docker Image
         run: |
-          echo curl -sH "Authorization: JWT ${{ steps.docker_login.outputs.token }}" "https://hub.docker.com/v2/repositories/${{ env.IMAGE_NAME }}/tags/${{ env.IMAGE_LABEL }}/"
-          curl -sH "Authorization: JWT ${{ steps.docker_login.outputs.token }}" "https://hub.docker.com/v2/repositories/${{ env.IMAGE_NAME }}/tags/${{ env.IMAGE_LABEL }}/"
+          curl --silent -f --head -lL https://hub.docker.com/v2/repositories/${{ env.IMAGE_NAME }}/tags/${{ env.IMAGE_LABEL }}/ > /dev/null
 
