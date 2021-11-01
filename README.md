@@ -201,20 +201,24 @@ To configure this action do:
 
 - Create a new account on [DigitalOcean](https://www.digitalocean.com/), generate a new Token (API menu) and copy it
 - Create a new account on [DuckDns](https://www.duckdns.org/), create a new domain and copy the token from the main page.
-- Edit `.github\workflows\deploy-digitalocean.yml` file to set `DOCKERHUB_USER` and `IMAGE_NAME` variables, with the name account on DockerHub and the image name that will be deployed in DigitalOcean. These values ​​should be the same as those used in the DockerHub action
-- Add a new repository secret named `DOCKERHUB_TOKEN` with the token from DockerHub
+- Publish a Docker Image on DockerHub triggering the `Deploy to DockerHub` action
+- Edit `.github\workflows\deploy-digitalocean.yml` file to set `DOCKERHUB_USER` and `IMAGE_NAME` variables, with the name account on DockerHub and the image name that will be deployed in DigitalOcean. These values should be the same as those used in the `Deploy to DockerHub` action
 - Add a new repository secret named `DIGITALOCEAN_ACCESS_TOKEN` with the token from DigitalOcean
 - Add a new repository secret named `DUCKDNS_TOKEN` with the token from DuckDns
 - Add a new repository secret named `JUPYTERLAB_TOKEN` with a personal value. This token will be used to access JupyterLab safely. 
 
 This action will do:
 
+- Check if a JupyterLab image exists in DockerHub
 - Check if Droplet exists previosly (It will not be created twice)
 - Create a new 1 GB RAM droplet (the cheapest one). This droplet can be power up later on DigitalOcean dashboard.
 - Execute the latest JupyterLab image from DockerHub
 - Update DuckDNS domain with the Droplet IP
 
 To access to JupyterLab on DigitalOcean use the following url: http://`<duckdns's domain>`.duckdns.org
+
+Addionally you can monitor the droplet resources with Glances at http://`<duckdns's domain>`.duckdns.org:61208
+
 
 This action have to be trigger manually
 
