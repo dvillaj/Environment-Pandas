@@ -12,9 +12,6 @@ function createSwapMemory {
 function installGlances {
     echo "Installing Glances ..."
 
-    apt -qq update
-    apt install -y glances
-
     envsubst < $DEPLOY_DIR/services/glances.template  > /etc/systemd/system/glances.service
 
     systemctl enable glances.service

@@ -1,11 +1,15 @@
 [Unit]
-Description=Glances
-After=network.target
-
+Description=Portainer Service
+After=docker.service
+Requires=docker.service
+ 
 [Service]
-ExecStart=/usr/local/bin/glances -w
-Restart=on-abort
-RemainAfterExit=yes
-
+TimeoutStartSec=0
+Restart=always
+ExecStartPre=-/usr/bin/docker stop %n
+ExecStartPre=-/usr/bin/docker rm %n
+ExecStartPre=-/usr/bin/docker pull docker.io/nicolargo/glances
+ExecStart=/usr/bin/docker run  --name %n -p 61208-61209:61208-61209 -e GLANCES_OPT="-w" -v /var/run/docker.sock:/var/run/docker.sock:ro --pid host --rm docker.io/nicolargo/glances
+ 
 [Install]
 WantedBy=multi-user.target
