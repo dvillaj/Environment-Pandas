@@ -12,7 +12,7 @@ RUN apt update && \
 
 ENV PORT=8888
 
-COPY resources/run-jupyter.sh /opt/jupyterlab
+COPY resources/docker/run-jupyter.sh /opt/jupyterlab
 
 EXPOSE 8888
 

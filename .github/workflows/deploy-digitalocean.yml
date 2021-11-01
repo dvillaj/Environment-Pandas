@@ -16,6 +16,8 @@ env:
   DROPLET_IMAGE: docker-20-04
   DROPLET_TAG: jupyterlab
 
+  DEPLOY_DIR: /opt/deploy
+
 jobs:
   build:
 
@@ -56,6 +58,12 @@ jobs:
           echo ::set-output name=key_id::$DO_SSH_KEY_ID
           echo ::set-output name=ssh_key_private::$SSH_KEY
 
+      - name: Collect actual SSH Keys
+        id: actual_keys
+        run: |
+          SSH_KEYS=$(doctl compute ssh-key list --no-header --format ID |  tr '\n' ',')          
+          echo ::set-output name=keys_id::"${SSH_KEYS::-1}"
+
       - name: Create JupyterLab Droplet
         id: create_droplet
         run: |
@@ -64,7 +72,7 @@ jobs:
                 --region ${{ env.DROPLET_REGION }} \
                 --size ${{ env.DROPLET_SIZE }} \
                 --tag-name ${{ env.DROPLET_TAG }} \
-                --ssh-keys ${{ steps.create_ssh_id.outputs.key_id }} \
+                --ssh-keys "${{ steps.actual_keys.outputs.keys_id }}" \
                 --wait \
                 --no-header \
                 --format PublicIPv4)
@@ -75,12 +83,34 @@ jobs:
         run: |
           doctl compute ssh-key delete ${{ steps.create_ssh_id.outputs.key_id }} --force         
 
+      - name: Get latest code
+        uses: actions/checkout@v2  
+
         # We have to give some time to the droplet for starting the SSH service
       - name: Sleeping ...
         run: |
-          sleep 15
+          sleep 10
 
-      - name: Deploy Docker
+      - name: Create Deploy Directory
+        uses: appleboy/ssh-action@v0.1.2
+        with:
+          host: ${{ steps.create_droplet.outputs.public_ip }}
+          key: "${{ steps.create_ssh_id.outputs.ssh_key_private }}"
+          username: root
+     
+          script: |
+            mkdir ${{ env.DEPLOY_DIR }}
+
+      - name: Deploy files
+        uses: wlixcc/SFTP-Deploy-Action@v1.0
+        with:
+          username: 'root'
+          server: ${{ steps.create_droplet.outputs.public_ip }}
+          ssh_private_key: "${{ steps.create_ssh_id.outputs.ssh_key_private }}"
+          local_path: './resources/digitalocean/*'
+          remote_path: '/opt/deploy'          
+
+      - name: Deploy Services
         uses: appleboy/ssh-action@v0.1.2
         with:
           host: ${{ steps.create_droplet.outputs.public_ip }}
@@ -90,11 +120,10 @@ jobs:
           script: |
             mkdir -p /opt/jupyterlab/notebooks
 
-            /usr/bin/docker run -d -p 80:8888 \
-                    -v /opt/jupyterlab/notebooks:/home/notebooks \
-                    -e JUPYTERLAB_TOKEN=${{ secrets.JUPYTERLAB_TOKEN }} \
-                    --name jupyterlab \
-                    --restart always \
-                    ${{ env.DOCKERHUB_USER }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_LABEL }}
+            export JUPYTERLAB_TOKEN=${{ secrets.JUPYTERLAB_TOKEN }}
+            export JUPYTERLAB_IMAGE=${{ env.DOCKERHUB_USER }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_LABEL }}
+            export DEPLOY_DIR=${{ env.DEPLOY_DIR }}
+
+            sh $DEPLOY_DIR/deploy.sh
 
             curl https://www.duckdns.org/update/${{ env.DUCKDNS_DOMAIN }}/${{ secrets.DUCKDNS_TOKEN }}
