@@ -61,6 +61,7 @@ jobs:
 
           echo ::set-output name=key_id::$DO_SSH_KEY_ID
           echo ::set-output name=ssh_key_private::$SSH_KEY
+          echo ::set-output name=ssh_key_public::$SSH_KEY_PUBLIC
 
       - name: Collect actual SSH Keys
         id: actual_keys
@@ -140,3 +141,14 @@ jobs:
           username: root
      
           script: curl https://www.duckdns.org/update/${{ env.DUCKDNS_DOMAIN }}/${{ secrets.DUCKDNS_TOKEN }}
+
+      - name: Remove public key
+        uses: appleboy/ssh-action@v0.1.2
+        with:
+          host: ${{ steps.create_droplet.outputs.public_ip }}
+          key: ${{ steps.create_ssh_id.outputs.ssh_key_private }}
+          username: root
+     
+          script: |
+            grep -v "${{ steps.create_ssh_id.outputs.ssh_key_public }}" .ssh/authorized_keys > authorized_keys.new
+            mv authorized_keys.new .ssh/authorized_keys          
