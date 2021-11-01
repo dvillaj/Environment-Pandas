@@ -24,27 +24,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check Docker Image
-        run: |
-
-          TOKEN=$( curl -sSLd "username=${{ env.DOCKERHUB_USER }}&password=${{ secrets.DOCKERHUB_TOKEN }}" https://hub.docker.com/v2/users/login | jq -r ".token" )
-          echo curl -sH "Authorization: JWT $TOKEN" "https://hub.docker.com/v2/repositories/${{ env.IMAGE_NAME }}/tags/${{ env.IMAGE_LABEL }}/" | jq .
-
-          # echo $?
-
-          # export REGISTRY=https://index.docker.io/v1/
-          # echo ${{ secrets.DOCKERHUB_TOKEN }} || docker login -u ${{ env.DOCKERHUB_USER }}  --password-stdin $REGISTRY
-          # docker manifest inspect ${{ env.IMAGE_NAME }}:${{ env.IMAGE_LABEL }} > /dev/null
-
-          # retVal=$?
-          # if [ $retVal -ne 0 ]; then
-          #   echo "Docker image does not exists :-("
-          # else 
-          #   echo "Docker image does exists. Good :-)"
-          # fi
-          # exit $retVal
-
-
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
         with:
