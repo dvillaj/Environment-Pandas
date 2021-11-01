@@ -39,5 +39,7 @@ jobs:
 
       - name: Check Docker Image
         run: |
-          curl --silent -f --head -lL https://hub.docker.com/v2/repositories/${{ env.IMAGE_NAME }}/tags/${{ env.IMAGE_LABEL }}/ > /dev/null
+          # curl --silent -f --head -lL https://hub.docker.com/v2/repositories/${{ env.IMAGE_NAME }}/tags/${{ env.IMAGE_LABEL }}/ > /dev/null
+
+          docker manifest inspect ${{ env.DOCKERHUB_USER }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_LABEL }}
 
