@@ -44,6 +44,11 @@ There are another options to have JupyerLab deployed on the cloud for accessing 
 |[DigitalOcean](https://www.digitalocean.com/) (**Not Free: 5$/Month but you can get 100$ to try it**)|Cloud (Deployed with DockerHub's image)|Python version specified at `DockerFile`|Yes|1 GB (Can be increased paying more money)|25 GB (Can be increased paying more money|Remote directory (sync to local with JupyterLab's `Git extension`)|
 |[Heroku](https://www.heroku.com/) (Free but with lower resources)|Cloud (Deployed with `Dockerfile`)|Python version specified at `DockerFile`|Yes| 512 MB|100 MB|Remote directory (**It will be deleted after 30 minutes of inactivity**)|
 
+
+## Global View
+
+![Global View](./.media/GlobalImage.png)
+
 ## PipEnv
 
 This is the simplest option. You only need python installed in your machine and install the `pipenv` package ...
