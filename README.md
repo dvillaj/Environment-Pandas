@@ -20,6 +20,10 @@ The main components are:
 - Visualization Libraries
 - Other python packages (`requeriments.txt` file)
 
+## Requeriments
+
+- Git Client (jupyterlab-git package)
+
 ## Flavors
 
 There are several flavors for a local python environment with JupyterLab in your machine:

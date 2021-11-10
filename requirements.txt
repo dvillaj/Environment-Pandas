@@ -4,7 +4,7 @@ Faker
 scikit-learn
 tensorflow
 scipy 
-wordcloud
+#wordcloud 
 
 matplotlib 
 seaborn
