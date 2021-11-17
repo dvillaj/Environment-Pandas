@@ -31,6 +31,7 @@ ipython-sql
 jupyterlab-git
 jupyterlab-drawio
 jupyterlab-spreadsheet-editor
+notebook-as-pdf
 
 prettytable
 pprintpp
