@@ -6,7 +6,7 @@ WORKDIR /home/notebooks
 COPY requirements.txt /opt/jupyterlab/
 
 RUN apt update && \
-    apt install -y git htop vim procps jq && \
+    apt install -y git htop vim procps jq curl && \
     pip install -U pip && \
     pip install -r /opt/jupyterlab/requirements.txt 
 
