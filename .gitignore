@@ -3,3 +3,5 @@ Pipfile*
 .vscode/
 
 JypyterLab.lnk
+
+notebooks/.virtual_documents/

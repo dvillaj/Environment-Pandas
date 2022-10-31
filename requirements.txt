@@ -20,7 +20,8 @@ lxml
 requests
 
 openpyxl 
-xlrd 
+xlrd
+xlsxwriter
 
 pexpect 
 
@@ -31,9 +32,13 @@ ipython-sql
 jupyterlab-git
 jupyterlab-drawio
 jupyterlab-spreadsheet-editor
+elyra-code-snippet-extension
 notebook-as-pdf
 
 prettytable
 pprintpp
 
 gdown
+
+duckdb
+duckdb-engine
