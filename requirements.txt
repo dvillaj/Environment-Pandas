@@ -32,7 +32,7 @@ ipython-sql
 jupyterlab-git
 jupyterlab-drawio
 jupyterlab-spreadsheet-editor
-jupyterlab-code-snippets
+elyra-code-snippet-extension
 notebook-as-pdf
 
 prettytable
