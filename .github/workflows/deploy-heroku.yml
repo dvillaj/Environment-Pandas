@@ -14,8 +14,8 @@ jobs:
       - name: Checkout files
         uses: actions/checkout@v2
 
-      - name: Update JUPYTERLAB_TOKEN on Heroku
-        run: heroku config:set JUPYTERLAB_TOKEN=${{ secrets.JUPYTERLAB_TOKEN }} -a ${{ env.HEROKU_APP_NAME }}
+      - name: Create Environment Variables on Heroku
+        run: heroku config:set JUPYTERLAB_TOKEN=${{ secrets.JUPYTERLAB_TOKEN }} GITHUB_TOKEN=${{ secrets.GIT_TOKEN }} -a ${{ env.HEROKU_APP_NAME }}
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}        
 
