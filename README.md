@@ -249,8 +249,11 @@ To configure this action do:
 - Create a new app and name it
 - Generate a Api Key from "Account Settings" option and copy it
 - Edit `.github\workflows\deploy-heroku.yml` file to set `HEROKU_EMAIL` and `HEROKU_APP_NAME` variables, with the email used on Heroku and the name of your app
-- Add a new repository secret named `HEROKU_API_KEY` with the Api Key from heroku.
-- Add a new repository secret named `JUPYTERLAB_TOKEN` with a personal value. This token will be used to access JupyterLab safely. 
+- Create a personal token in Github with at least repo scope (Full control of private repositories)
+- Add the following repository secrets:
+    - `HEROKU_API_KEY` with the Api Key from heroku.
+    - `JUPYTERLAB_TOKEN` with a personal value. This token will be used to access JupyterLab safely. 
+    - `GIT_TOKEN` with the personal token from Github. This token will be used to clone private repositories or push changes to github
 
 This action will build the repo docker image and publish to Heroku's app.
 
