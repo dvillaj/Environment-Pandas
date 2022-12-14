@@ -12,7 +12,6 @@ matplotlib
 xlrd
 scipy
 faker
-notebook-as-pdf
 gdown
 elyra-code-snippet-extension
 pivottablejs
