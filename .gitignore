@@ -1,7 +1,8 @@
 .ipynb_checkpoints
-Pipfile*
+.virtual_documents
+.DS_Store
 .vscode/
 
-JypyterLab.lnk
+Pipfile*
 
-notebooks/.virtual_documents/
+JypyterLab.lnk

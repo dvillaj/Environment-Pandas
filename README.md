@@ -12,12 +12,10 @@ Feel free to clone this project and configure it with your personal packages
 
 The main components are:
 
-- Python 3.9
-- JupyterLab 3
-- Several JupyterLab's extensions like [Git Extension](https://github.com/jupyterlab/jupyterlab-git)
-- Pandas
-- Machine Learning Libraries
-- Visualization Libraries
+- Python 3
+- JupyterLab
+- Several JupyterLab's extensions like [Git Extension](https://github.com/jupyterlab/jupyterlab-git) or [Elyra Code Snippets](https://elyra.readthedocs.io/en/latest/user_guide/code-snippets.html)
+- Pandas 1.3.5
 - Other python packages (`requeriments.txt` file)
 
 ## Requeriments
@@ -139,6 +137,7 @@ Click with the left mouse button and set the following properties:
 Target: C:\Windows\System32\cmd.exe /c "conda activate environment-pandas && jupyter lab --notebook-dir ./notebooks"
 Start in: [Project's Folder]
 ```
+
 
 ### Update all packages
 
