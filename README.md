@@ -62,7 +62,7 @@ Start in: [Project's Folder]
 
 If PipEnv doesn't work (for instance in a new mac with a M1 processor) you have other flavor using conda.
 
-To use conda you need to have a conda client installed from [MiniForge](https://github.com/conda-forge/miniforge) or [Miniconda](https://docs.conda.io/en/latest/)miniconda.html)
+To use conda you need to have a conda client installed from [MiniForge](https://github.com/conda-forge/miniforge) or [Miniconda](https://docs.conda.io/en/latest/miniconda.html)
 
 Conda is similar to PipEnv and will let you create a new isolated virtual environment.
 
