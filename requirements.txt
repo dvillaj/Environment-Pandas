@@ -13,7 +13,7 @@ xlrd
 scipy
 faker
 gdown
-elyra-code-snippet-extension
+elyra-code-snippet-extension==3.12 # Bug in the latest version
 pivottablejs
 itables
 world-bank-data
