@@ -1,29 +1,61 @@
-tabulate
-openpyxl
-xlsxwriter
-pydrive
-lxml
-html5lib
-beautifulsoup4
+# Pandas
+pandas==1.3.5 # The same version as Google Colab
+
+# Jupyter
+jupyterlab
+jupyterlab-git
+elyra-code-snippet-extension
 ipython-sql
-sqlalchemy
-feather-format
+
+# Graphs
 matplotlib
-xlrd
+seaborn
+plotly
+
+# Statistics
 scipy
-faker
-gdown
-elyra-code-snippet-extension==3.12 # Bug in the latest version
-pivottablejs
-itables
-world-bank-data
-tabula-py
-pandas-profiling
-pandas==1.3.5
+
+# Excel
+xlrd
+xlsxwriter
+openpyxl
+
+# Databases
+sqlalchemy
 duckdb
 duckdb-engine
-pyarrow
-chardet
-pandas_datareader
 
-jupyterlab
+# Pdf
+tabula-py
+
+# Google utils
+gdown
+pydrive
+
+# Html
+html5lib  
+beautifulsoup4
+
+# Dataframe Tools
+pandas_datareader
+pivottablejs
+pandas-profiling
+tabulate
+
+# Encoding
+chardet
+
+# Apache Arrow Format
+pyarrow
+
+# Feather Format
+feather-format
+
+# Synthetic Data
+faker
+
+# XML Format
+lxml
+
+# Datasets
+world-bank-data
