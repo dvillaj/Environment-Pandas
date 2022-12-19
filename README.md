@@ -1,18 +1,18 @@
 
 # Pandas Environment
 
-This repository offers you a basic setup for a local environment with Pandas and JupyterLab with a PipEnv virtual environmnet
+This repository offers you a basic setup for a local environment with Pandas and JupyterLab with a [PipEnv](https://pipenv-es.readthedocs.io/es/latest/) virtual environment
 
 
 ## PipEnv
 
-Install the `pipenv` package ...
+- Install the `pipenv` package ...
 
 ```
 pip install pipenv
 ```
 
-Create a new isolated virtual environment and install all the packages from `requirements.txt` file ...
+- Create a new isolated virtual environment and install all the packages from `requirements.txt` file ...
 
 ```
 pipenv install -r requirements.txt
@@ -20,7 +20,7 @@ pipenv install -r requirements.txt
 
 ### JupyterLab with pipenv
 
-Run Jupyter lab
+Run Jupyter lab inside the virtual environment ...
 
 ```
 pipenv run jupyter lab --notebook-dir ./notebooks
@@ -28,6 +28,8 @@ pipenv run jupyter lab --notebook-dir ./notebooks
 
 
 ### Update packages
+
+Update python packages with the latest versions ...
 
 ```
 pipenv update
